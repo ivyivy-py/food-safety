@@ -100,3 +100,12 @@ modify the code to include use the whole database of ingredients in the MCP. and
 git push https://[REDACTED_GH_TOKEN]@github.com/ivyivy-py/food-safety.git
 ```
 
+---
+
+### Prompt 6: Handle GET Requests on MCP Endpoint
+
+```text
+{"jsonrpc":"2.0","error":{"code":-32600,"message":"Method not allowed. Only POST is accepted."},"id":null}
+```
+
+

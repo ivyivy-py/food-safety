@@ -41,10 +41,89 @@ export default async function handler(req, res) {
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
 
+  // Handle GET requests (Browser inspection, API info, and direct URL queries)
+  if (req.method === 'GET') {
+    const q = req.query || {};
+    const query = q.query || q.q || '';
+    const toolName = q.tool || q.name || (query ? 'check_additive' : null);
+    const category = q.category || '';
+    const ingredients = q.ingredients || '';
+
+    // If query parameters are provided, execute the tool query directly
+    if (query || ingredients) {
+      let result = null;
+      switch (toolName) {
+        case 'check_ingredient_list':
+          result = checkIngredientList(ingredients || query);
+          break;
+        case 'search_additives':
+          result = searchAdditives(query, category);
+          break;
+        case 'check_nutrition':
+          result = checkNutrition(query);
+          break;
+        case 'check_pesticide_mrl':
+          result = checkPesticideMrl(query);
+          break;
+        case 'check_additive':
+        default:
+          result = checkAdditive(query);
+          break;
+      }
+      return res.status(200).json({
+        jsonrpc: '2.0',
+        id: Date.now(),
+        result,
+        mcp_source: 'synchronized-codices-active',
+        mcp_endpoint: MCP_SERVER_ENDPOINT,
+        active_engine: 'JECFA 96th Report / EFSA 2023-R / IL-MoH 5780'
+      });
+    }
+
+    // Default friendly API inspection status for browser navigation
+    return res.status(200).json({
+      jsonrpc: '2.0',
+      status: 'online',
+      service: 'NutriSafe ToxiScan MCP Gateway',
+      version: '2.4.0',
+      description: 'Model Context Protocol (JSON-RPC 2.0) Gateway for food additives, toxicology, and regulatory compliance.',
+      mcp_endpoint: MCP_SERVER_ENDPOINT,
+      supported_methods: ['POST (JSON-RPC 2.0 tools/call)', 'GET (Interactive query & inspection)'],
+      tools: [
+        {
+          name: 'check_additive',
+          description: 'Look up additive by E-number, name, or CAS. Returns safety score, ADI, carcinogenicity, pediatric alerts, and regulatory status.',
+          sample_get: '/api/mcp?tool=check_additive&query=E250'
+        },
+        {
+          name: 'check_ingredient_list',
+          description: 'Scan packaged ingredient text for high-risk additives, chemical synergies, forbidden additives, and allergen warnings.',
+          sample_get: '/api/mcp?tool=check_ingredient_list&query=Sugar,E150d,E621,Citric Acid,E211'
+        },
+        {
+          name: 'search_additives',
+          description: 'Search additives by keyword, category, or health concern.',
+          sample_get: '/api/mcp?tool=search_additives&query=preservative'
+        },
+        {
+          name: 'check_nutrition',
+          description: 'Look up Israeli Ministry of Health nutritional profiles for 4,624 foods.',
+          sample_get: '/api/mcp?tool=check_nutrition&query=חומוס'
+        },
+        {
+          name: 'check_pesticide_mrl',
+          description: 'Check pesticide Maximum Residue Limits (MRLs) on crops.',
+          sample_get: '/api/mcp?tool=check_pesticide_mrl&query=glyphosate wheat'
+        }
+      ],
+      sample_post_curl: `curl -X POST /api/mcp -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"check_additive","arguments":{"query":"E171"}}}'`
+    });
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({
       jsonrpc: '2.0',
-      error: { code: -32600, message: 'Method not allowed. Only POST is accepted.' },
+      error: { code: -32600, message: 'Method not allowed. Use POST for JSON-RPC 2.0 or GET for inspection and queries.' },
       id: null
     });
   }
