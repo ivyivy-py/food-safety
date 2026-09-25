@@ -7,12 +7,14 @@ interface HeaderProps {
   activeTab: NavTab;
   setActiveTab: (tab: NavTab) => void;
   onExport: () => void;
+  onOpenMcpInspector?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   activeTab,
   setActiveTab,
-  onExport
+  onExport,
+  onOpenMcpInspector
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
@@ -67,6 +69,21 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Action Controls */}
         <div className="flex items-center gap-2 sm:gap-3">
+          {onOpenMcpInspector && (
+            <button
+              type="button"
+              onClick={onOpenMcpInspector}
+              className="flex items-center gap-1.5 bg-[#001318] text-[#4edea3] hover:text-white hover:bg-[#0f292f] border border-[#4edea3]/40 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-['JetBrains_Mono'] font-medium transition-all shadow-xs cursor-pointer active:scale-95"
+              title="Open Model Context Protocol (MCP) Live Stream Inspector in pop-up window"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#4edea3] inline-block animate-ping shrink-0" />
+              <span className="material-symbols-outlined text-[16px]">terminal</span>
+              <span className="hidden sm:inline">MCP Inspector</span>
+              <span className="sm:hidden">MCP</span>
+              <span className="bg-[#006c49] text-white text-[10px] px-1 py-0.2 rounded font-bold">DEV</span>
+            </button>
+          )}
+
           <button
             type="button"
             onClick={onExport}

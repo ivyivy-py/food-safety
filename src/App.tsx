@@ -6,7 +6,7 @@ import { PrimaryDossier } from './components/PrimaryDossier';
 import { DietaryAndMohLabels } from './components/DietaryAndMohLabels';
 import { PesticideMrlSection } from './components/PesticideMrlSection';
 import { RegulatoryDossier } from './components/RegulatoryDossier';
-import { McpInspector } from './components/McpInspector';
+import { McpInspectorModal } from './components/McpInspectorModal';
 import { IngredientScannerView } from './components/IngredientScannerView';
 import { PesticideLookupView } from './components/PesticideLookupView';
 import { ENumberDirectory } from './components/ENumberDirectory';
@@ -27,6 +27,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
   const [showExportModal, setShowExportModal] = useState(false);
+  const [isMcpInspectorOpen, setIsMcpInspectorOpen] = useState(false);
 
   const [activeToggles, setActiveToggles] = useState({
     jecfaEfsa: true,
@@ -105,6 +106,7 @@ export default function App() {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         onExport={() => setShowExportModal(true)}
+        onOpenMcpInspector={() => setIsMcpInspectorOpen(true)}
       />
 
       {/* Main Container */}
@@ -124,10 +126,14 @@ export default function App() {
                 isLoading={isLoading}
                 activeToggles={activeToggles}
                 setToggles={setActiveToggles}
+                onOpenMcpInspector={() => setIsMcpInspectorOpen(true)}
               />
 
               {/* Primary Assay Dossier */}
-              <PrimaryDossier dossier={activeDossier} />
+              <PrimaryDossier
+                dossier={activeDossier}
+                onOpenMcpInspector={() => setIsMcpInspectorOpen(true)}
+              />
 
               {/* Dietary & Israeli MoH Warning Labels System */}
               <DietaryAndMohLabels dossier={activeDossier} />
@@ -142,12 +148,6 @@ export default function App() {
                 dossier={activeDossier}
                 onSync={handleSyncCodices}
                 isSyncing={isSyncing}
-              />
-
-              {/* Model Context Protocol Live Stream Inspector */}
-              <McpInspector
-                dossier={activeDossier}
-                rawMcpResponse={rawMcpResponse}
               />
             </>
           )}
@@ -237,6 +237,30 @@ export default function App() {
           </div>
         </div>
       )}
+
+      {/* Model Context Protocol (MCP) Live Stream Inspector Pop-Up Window */}
+      <McpInspectorModal
+        isOpen={isMcpInspectorOpen}
+        onClose={() => setIsMcpInspectorOpen(false)}
+        dossier={activeDossier}
+        rawMcpResponse={rawMcpResponse}
+        latency={latency}
+      />
+
+      {/* Floating Developer Tools Launcher */}
+      <div className="fixed bottom-5 right-5 z-40">
+        <button
+          type="button"
+          onClick={() => setIsMcpInspectorOpen(true)}
+          className="group flex items-center gap-2 px-3.5 py-2.5 bg-[#001318] text-white rounded-full shadow-2xl hover:bg-[#0f292f] border border-[#00e698]/40 hover:border-[#00e698] transition-all cursor-pointer hover:scale-105 active:scale-95"
+          title="Open Developer Model Context Protocol (MCP) Live Stream Inspector"
+        >
+          <span className="w-2.5 h-2.5 rounded-full bg-[#00e698] inline-block animate-ping shrink-0" />
+          <span className="material-symbols-outlined text-[18px] text-[#4edea3]">terminal</span>
+          <span className="font-['JetBrains_Mono'] text-xs font-semibold tracking-wide">MCP Inspector</span>
+          <span className="bg-[#006c49] text-[10px] font-mono px-1.5 py-0.5 rounded text-white font-bold">DEV</span>
+        </button>
+      </div>
     </div>
   );
 }

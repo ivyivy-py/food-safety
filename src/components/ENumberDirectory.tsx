@@ -18,6 +18,8 @@ export const ENumberDirectory: React.FC<ENumberDirectoryProps> = ({ onSelectAddi
     { id: 'preservative', label: 'Preservatives' },
     { id: 'color', label: 'Colorants & Dyes' },
     { id: 'sweetener', label: 'Sweeteners' },
+    { id: 'emulsifier', label: 'Emulsifiers & Gums' },
+    { id: 'antioxidant', label: 'Antioxidants' },
     { id: 'flavor', label: 'Flavor Enhancers' },
     { id: 'banned', label: 'Banned / High Hazard' },
   ];

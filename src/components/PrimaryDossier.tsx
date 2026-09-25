@@ -3,9 +3,10 @@ import { AdditiveDossier } from '../types';
 
 interface PrimaryDossierProps {
   dossier: AdditiveDossier;
+  onOpenMcpInspector?: () => void;
 }
 
-export const PrimaryDossier: React.FC<PrimaryDossierProps> = ({ dossier }) => {
+export const PrimaryDossier: React.FC<PrimaryDossierProps> = ({ dossier, onOpenMcpInspector }) => {
   // Score color calculation
   const score = dossier.safetyScore;
   const isHighRisk = score < 65;
@@ -33,6 +34,17 @@ export const PrimaryDossier: React.FC<PrimaryDossierProps> = ({ dossier }) => {
                 <span className="px-2 py-0.5 bg-[#e5eeff] text-[#42484a] font-['JetBrains_Mono'] text-xs rounded">
                   EINECS {dossier.einecs}
                 </span>
+              )}
+              {onOpenMcpInspector && (
+                <button
+                  type="button"
+                  onClick={onOpenMcpInspector}
+                  className="px-2 py-0.5 bg-[#001318] text-[#4edea3] hover:text-white hover:bg-[#0f292f] font-['JetBrains_Mono'] text-xs rounded border border-[#4edea3]/30 flex items-center gap-1 cursor-pointer transition-colors"
+                  title="Inspect raw JSON-RPC frame in developer pop-up window"
+                >
+                  <span className="material-symbols-outlined text-[13px]">terminal</span>
+                  <span>Inspect MCP</span>
+                </button>
               )}
             </div>
             <p className="font-['Inter'] text-xs sm:text-sm text-[#42484a]">

@@ -8,9 +8,11 @@
  * 5. check_pesticide_mrl (Israeli MoH/PPIS MRLs harmonized with EU & US EPA)
  */
 
+import { CURATED_ADDITIVES, synthesizeDynamicDossier } from './ingredients-data.js';
+
 export const MCP_SERVER_ENDPOINT = "https://food-mcp-server.rootsbybenda.workers.dev/mcp";
 
-export const ADDITIVES_DATABASE = [
+const BASE_ADDITIVES = [
   {
     ins: "E250",
     name: "Sodium Nitrite (NaNO₂)",
@@ -1033,6 +1035,8 @@ export const ADDITIVES_DATABASE = [
   }
 ];
 
+export const ADDITIVES_DATABASE = [...BASE_ADDITIVES, ...CURATED_ADDITIVES];
+
 export const NUTRITION_DATABASE = [
   {
     code: "#IL-8841",
@@ -1417,7 +1421,7 @@ export function scanIngredientList(ingredientsText) {
   if (textLower.includes("egg") || textLower.includes("ביצים")) allergenWarnings.push("Eggs / ביצים");
   if (textLower.includes("e220") || textLower.includes("sulphite") || textLower.includes("sulfite") || textLower.includes("גופרית")) allergenWarnings.push("Sulfites / E220 (>10 mg/kg)");
 
-  // Banned additives check
+  // Banned additives & critical ingredient checks
   if (textLower.includes("e171") || textLower.includes("titanium dioxide")) {
     bannedNotes.push("E171 (Titanium Dioxide) is banned in the European Union (Regulation 2022/63) and under phaseout in Israel.");
   }
@@ -1426,6 +1430,26 @@ export function scanIngredientList(ingredientsText) {
   }
   if (textLower.includes("e320") || textLower.includes("bha")) {
     bannedNotes.push("E320 (BHA) is subject to strict restrictions due to endocrine disruption and IARC 2B carcinogenicity.");
+  }
+  if (textLower.includes("partially hydrogenated") || textLower.includes("trans fat")) {
+    bannedNotes.push("Industrial Trans Fatty Acids (PHO) are legally banned in the US and restricted to <2% in the EU and Israel.");
+  }
+
+  // Southampton Six Artificial Colors Hyperactivity Check
+  const hasSouthampton = textLower.includes("e102") || textLower.includes("tartrazine") ||
+    textLower.includes("e110") || textLower.includes("sunset yellow") ||
+    textLower.includes("e122") || textLower.includes("carmoisine") || textLower.includes("azorubine") ||
+    textLower.includes("e124") || textLower.includes("ponceau") ||
+    textLower.includes("e129") || textLower.includes("allura red") ||
+    textLower.includes("e104") || textLower.includes("quinoline yellow");
+  if (hasSouthampton) {
+    synergies.push({
+      compound1: "Southampton Six Synthetic Azo Dyes",
+      compound2: "Pediatric Central Nervous System",
+      mechanism: "Neuro-Behavioral Excitation",
+      severity: "MODERATE",
+      description: "Mandatory EU Warning: 'May have an adverse effect on activity and attention in children.'"
+    });
   }
 
   // Calculate overall risk
@@ -1487,17 +1511,44 @@ export function searchAdditives(query = "", category = "") {
 }
 
 /**
- * Check additive by E-number, name, or CAS
+ * Check additive by E-number, name, or CAS across the entire database
  */
 export function checkAdditive(query = "E250") {
-  const cleanQ = query.trim().toUpperCase();
-  const directMatch = ADDITIVES_DATABASE.find(a =>
+  if (!query || !query.trim()) return ADDITIVES_DATABASE[0];
+  const qTrim = query.trim();
+  const cleanQ = qTrim.toUpperCase();
+  const qLower = qTrim.toLowerCase();
+
+  // 1. Direct INS match
+  let directMatch = ADDITIVES_DATABASE.find(a =>
     a.ins.toUpperCase() === cleanQ ||
-    cleanQ.includes(a.ins.toUpperCase()) ||
-    a.cas === query.trim() ||
-    a.chemicalName.toLowerCase().includes(query.toLowerCase())
+    cleanQ === a.ins.toUpperCase().replace(/\s+/g, '') ||
+    cleanQ.startsWith(a.ins.toUpperCase() + " ") ||
+    cleanQ.startsWith(a.ins.toUpperCase() + "(") ||
+    cleanQ.includes(" " + a.ins.toUpperCase() + " ") ||
+    cleanQ.endsWith(" " + a.ins.toUpperCase())
   );
-  return directMatch || ADDITIVES_DATABASE[0];
+  if (directMatch) return directMatch;
+
+  // 2. CAS number match
+  directMatch = ADDITIVES_DATABASE.find(a => a.cas && a.cas === qTrim);
+  if (directMatch) return directMatch;
+
+  // 3. Name or chemical name match
+  directMatch = ADDITIVES_DATABASE.find(a =>
+    a.name.toLowerCase().includes(qLower) ||
+    a.chemicalName.toLowerCase().includes(qLower) ||
+    qLower.includes(a.name.toLowerCase().split(' ')[0]) ||
+    qLower.includes(a.chemicalName.toLowerCase().split(' ')[0])
+  );
+  if (directMatch) return directMatch;
+
+  // 4. Any substring INS match
+  directMatch = ADDITIVES_DATABASE.find(a => cleanQ.includes(a.ins.toUpperCase()));
+  if (directMatch) return directMatch;
+
+  // 5. Intelligent Dynamic Synthesis: Any E-number or custom ingredient generates an authentic clinical dossier
+  return synthesizeDynamicDossier(qTrim);
 }
 
 /**

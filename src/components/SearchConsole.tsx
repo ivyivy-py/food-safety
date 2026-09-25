@@ -6,6 +6,7 @@ interface SearchConsoleProps {
   onSearch: (customQuery?: string) => void;
   isLoading: boolean;
   activeEngine?: string;
+  onOpenMcpInspector?: () => void;
   activeToggles: {
     jecfaEfsa: boolean;
     adiDosimetry: boolean;
@@ -28,6 +29,7 @@ export const SearchConsole: React.FC<SearchConsoleProps> = ({
   onSearch,
   isLoading,
   activeEngine = "JECFA 96th Report / EFSA 2023-R",
+  onOpenMcpInspector,
   activeToggles,
   setToggles
 }) => {
@@ -123,6 +125,19 @@ export const SearchConsole: React.FC<SearchConsoleProps> = ({
               </>
             )}
           </button>
+
+          {onOpenMcpInspector && (
+            <button
+              type="button"
+              onClick={onOpenMcpInspector}
+              className="flex items-center justify-center gap-1.5 px-3 sm:px-4 py-3.5 bg-[#001318] text-[#4edea3] hover:text-white hover:bg-[#0f292f] font-['JetBrains_Mono'] font-medium text-xs rounded-lg shadow-sm border border-[#4edea3]/40 transition-all shrink-0 cursor-pointer active:scale-98"
+              title="Open Model Context Protocol Live Stream Inspector in pop-up window"
+            >
+              <span className="material-symbols-outlined text-[18px]">terminal</span>
+              <span className="hidden sm:inline">Inspect MCP Frame</span>
+              <span className="bg-[#006c49] text-white text-[10px] px-1 py-0.2 rounded font-bold">DEV</span>
+            </button>
+          )}
         </form>
 
         {/* Quick Select Pills */}
