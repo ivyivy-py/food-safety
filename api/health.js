@@ -1,3 +1,5 @@
+import { MCP_SERVER_ENDPOINT } from './mcp-engine.js';
+
 /**
  * Standalone health handler for Vercel serverless functions
  * Endpoint: /api/health
@@ -9,6 +11,6 @@ export default function handler(req, res) {
     status: 'healthy',
     service: 'NutriSafe ToxiScan Bio-Portal',
     timestamp: new Date().toISOString(),
-    mcp_endpoint: 'https://food-mcp-server.rootsbybenda.workers.dev/mcp',
+    mcp_endpoint: MCP_SERVER_ENDPOINT,
   });
 }

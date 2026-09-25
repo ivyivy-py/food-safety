@@ -1,4 +1,4 @@
-export const MCP_ENDPOINT_CONFIG = "https://food-mcp-server.rootsbybenda.workers.dev/mcp";
+export const MCP_ENDPOINT_CONFIG = "https://server.smithery.ai/twohalves/food-safety";
 
 export interface McpResponse<T = any> {
   jsonrpc: string;

@@ -10,7 +10,7 @@
 
 import { CURATED_ADDITIVES, synthesizeDynamicDossier } from './ingredients-data.js';
 
-export const MCP_SERVER_ENDPOINT = "https://food-mcp-server.rootsbybenda.workers.dev/mcp";
+export const MCP_SERVER_ENDPOINT = "https://server.smithery.ai/twohalves/food-safety";
 
 const BASE_ADDITIVES = [
   {

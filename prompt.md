@@ -116,5 +116,14 @@ git push https://[REDACTED_GH_TOKEN]@github.com/ivyivy-py/food-safety.git
 git push https://[REDACTED_GH_TOKEN]@github.com/ivyivy-py/food-safety.git
 ```
 
+---
+
+### Prompt 8: Update MCP Endpoint to Smithery AI
+
+```text
+update the MCP endpoint to https://server.smithery.ai/twohalves/food-safety there is no API key needed
+```
+
+
 
 

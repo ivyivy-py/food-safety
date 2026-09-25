@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AdditiveDossier } from '../types';
+import { MCP_ENDPOINT_CONFIG } from '../services/mcpClient';
 
 interface McpInspectorModalProps {
   isOpen: boolean;
@@ -15,7 +16,7 @@ export const McpInspectorModal: React.FC<McpInspectorModalProps> = ({
   onClose,
   dossier,
   rawMcpResponse,
-  endpointUrl = "https://food-mcp-server.rootsbybenda.workers.dev/mcp",
+  endpointUrl = MCP_ENDPOINT_CONFIG,
   latency = 142
 }) => {
   const [copied, setCopied] = useState(false);

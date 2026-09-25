@@ -178,7 +178,8 @@ export default async function handler(req, res) {
       if (parsed) {
         return res.status(200).json({
           ...parsed,
-          mcp_source: 'remote-worker-live',
+          mcp_source: 'remote-smithery-live',
+          mcp_endpoint: MCP_SERVER_ENDPOINT,
           mcp_latency_ms: 142
         });
       }
