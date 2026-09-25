@@ -91,3 +91,12 @@ modify the code to include use the whole database of ingredients in the MCP. and
 1. collate my prompts into prompt.md file located at project root
 2. git push
 ```
+
+---
+
+### Prompt 5: Repository Push With Credentials
+
+```text
+git push https://[REDACTED_GH_TOKEN]@github.com/ivyivy-py/food-safety.git
+```
+
