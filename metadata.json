@@ -1,0 +1,6 @@
+{
+  "name": "NutriSafe ToxiScan Bio-Portal",
+  "description": "Unified Food Additive, Nutrition & Pesticide Safety Intelligence Terminal powered by live Model Context Protocol (MCP).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
