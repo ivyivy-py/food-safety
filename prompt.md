@@ -108,4 +108,13 @@ git push https://[REDACTED_GH_TOKEN]@github.com/ivyivy-py/food-safety.git
 {"jsonrpc":"2.0","error":{"code":-32600,"message":"Method not allowed. Only POST is accepted."},"id":null}
 ```
 
+---
+
+### Prompt 7: Repository Push With Credentials
+
+```text
+git push https://[REDACTED_GH_TOKEN]@github.com/ivyivy-py/food-safety.git
+```
+
+
 
