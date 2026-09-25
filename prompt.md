@@ -124,6 +124,10 @@ git push https://[REDACTED_GH_TOKEN]@github.com/ivyivy-py/food-safety.git
 update the MCP endpoint to https://server.smithery.ai/twohalves/food-safety there is no API key needed
 ```
 
+---
 
+### Prompt 9: Repository Push With Credentials
 
-
+```text
+git push https://[REDACTED_GH_TOKEN]@github.com/ivyivy-py/food-safety.git
+```
