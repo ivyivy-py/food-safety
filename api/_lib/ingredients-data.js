@@ -41,7 +41,7 @@ export const CURATED_ADDITIVES = [
       kosher: { certified: true, note: "Synthetic organic acid", badge: "Pareve" },
       vegan: { certified: true, note: "Non-animal source", badge: "Vegan" },
       glutenFree: { certified: true, note: "<5 ppm gliadin", badge: "Gluten Free" },
-      traceability: "Batch Traceability: ISO-22000 Cert #200-SB · Verified Pure"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 0, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -52,7 +52,7 @@ export const CURATED_ADDITIVES = [
     pesticideResidues: [
       { compound: "Chlorpyrifos", cas: "2921-88-2", group: "Organophosphate", detected: "0.002 mg/kg", detectedNum: 0.002, euMrl: "0.010 mg/kg", usEpa: "0.050 mg/kg", israelMrl: "0.010 mg/kg", verdict: "Within Margin", isViolation: false }
     ],
-    pesticideGauge: { compound: "Chlorpyrifos", detected: 0.002, euLimit: 0.010, usLimit: 0.050, maxScale: 0.060, alert: "Safe Residue", notice: "Within EU & Israeli PPIS standards." },
+    pesticideGauge: { compound: "Chlorpyrifos", detected: 0.002, euLimit: 0.010, usLimit: 0.050, maxScale: 0.060, alert: "Within demo limits", notice: "Within EU & Israeli PPIS standards." },
     regulatoryDossier: [
       { agency: "EFSA (European Union)", reg: "Regulation (EC) No 1333/2008", status: "Authorized", statusColor: "#006c49", adi: "0-11 mg/kg bw", description: "Re-evaluated with group ADI (sorbic acid + potassium sorbate)." },
       { agency: "US FDA (United States)", reg: "21 CFR 182.3089", status: "GRAS", statusColor: "#006c49", adi: "GMP", description: "Generally Recognized As Safe for direct human food use." },
@@ -84,7 +84,7 @@ export const CURATED_ADDITIVES = [
       kosher: { certified: true, note: "Pareve certified chemical synthesis", badge: "Pareve" },
       vegan: { certified: true, note: "Synthetic source, no animal components", badge: "Vegan" },
       glutenFree: { certified: true, note: "Grain-free mineral salt", badge: "Gluten Free" },
-      traceability: "Batch Traceability: ISO-22000 Cert #202-PS · Verified Pure"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 0, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -95,7 +95,7 @@ export const CURATED_ADDITIVES = [
     pesticideResidues: [
       { compound: "Glyphosate", cas: "1071-83-6", group: "Phosphonoglycine", detected: "0.010 mg/kg", detectedNum: 0.010, euMrl: "0.100 mg/kg", usEpa: "5.000 mg/kg", israelMrl: "0.100 mg/kg", verdict: "Within Margin", isViolation: false }
     ],
-    pesticideGauge: { compound: "Glyphosate", detected: 0.010, euLimit: 0.100, usLimit: 5.000, maxScale: 0.200, alert: "Safe Residue", notice: "Well within statutory limits." },
+    pesticideGauge: { compound: "Glyphosate", detected: 0.010, euLimit: 0.100, usLimit: 5.000, maxScale: 0.200, alert: "Within demo limits", notice: "Well within statutory limits." },
     regulatoryDossier: [
       { agency: "EFSA (European Union)", reg: "Regulation (EC) No 1333/2008", status: "Authorized", statusColor: "#006c49", adi: "0-11 mg/kg bw", description: "Authorized food additive in EU Category 01 to 14." },
       { agency: "US FDA (United States)", reg: "21 CFR 182.3640", status: "GRAS", statusColor: "#006c49", adi: "GMP", description: "Affirmed as GRAS for multi-category food preservation." },
@@ -127,7 +127,7 @@ export const CURATED_ADDITIVES = [
       kosher: { certified: true, note: "Pareve chemical compound", badge: "Pareve" },
       vegan: { certified: true, note: "Mineral sulfur combustion", badge: "Vegan" },
       glutenFree: { certified: true, note: "Allergen free of gluten, but triggers sulfite allergy", badge: "Gluten Free" },
-      traceability: "Batch Traceability: ISO-22000 Cert #220-SO2 · Verified Pure"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 0, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -138,7 +138,7 @@ export const CURATED_ADDITIVES = [
     pesticideResidues: [
       { compound: "Chlorpyrifos", cas: "2921-88-2", group: "Organophosphate", detected: "0.003 mg/kg", detectedNum: 0.003, euMrl: "0.010 mg/kg", usEpa: "0.050 mg/kg", israelMrl: "0.010 mg/kg", verdict: "Within Margin", isViolation: false }
     ],
-    pesticideGauge: { compound: "Chlorpyrifos", detected: 0.003, euLimit: 0.010, usLimit: 0.050, maxScale: 0.060, alert: "Safe Residue", notice: "Within standard limits." },
+    pesticideGauge: { compound: "Chlorpyrifos", detected: 0.003, euLimit: 0.010, usLimit: 0.050, maxScale: 0.060, alert: "Within demo limits", notice: "Within standard limits." },
     regulatoryDossier: [
       { agency: "EFSA (European Union)", reg: "Regulation (EC) No 1333/2008 & 1169/2011", status: "Allergen Regulated", statusColor: "#ff9800", adi: "0-0.7 mg/kg bw", description: "Mandatory allergen labeling when exceeding 10 mg/kg or 10 mg/L." },
       { agency: "US FDA (United States)", reg: "21 CFR 101.100 & 182.3862", status: "Allergen Regulated", statusColor: "#ff9800", adi: "0.7 mg/kg bw", description: "Banned on raw fruits/vegetables; mandatory labeling elsewhere." },
@@ -171,7 +171,7 @@ export const CURATED_ADDITIVES = [
       kosher: { certified: true, note: "Strict kosher pareve certified", badge: "Pareve" },
       vegan: { certified: true, note: "Plant glucose fermentation", badge: "Vegan" },
       glutenFree: { certified: true, note: "<5 ppm gliadin", badge: "Gluten Free" },
-      traceability: "Batch Traceability: ISO-22000 Cert #300-VC · Verified Pure"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 0, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -180,7 +180,7 @@ export const CURATED_ADDITIVES = [
       complianceAssessment: "Benign profile. Fully compliant with MoH green guidelines."
     },
     pesticideResidues: [],
-    pesticideGauge: { compound: "None", detected: 0, euLimit: 0.1, usLimit: 0.1, maxScale: 0.2, alert: "Pristine", notice: "Pharmaceutical grade pure crystalline ascorbic acid." },
+    pesticideGauge: { compound: "None", detected: 0, euLimit: 0.1, usLimit: 0.1, maxScale: 0.2, alert: "Within demo limits", notice: "Pharmaceutical grade pure crystalline ascorbic acid." },
     regulatoryDossier: [
       { agency: "EFSA (European Union)", reg: "Regulation (EC) No 1333/2008", status: "Authorized Quantum Satis", statusColor: "#006c49", adi: "Not Specified", description: "Full authorization with no safety restrictions." },
       { agency: "US FDA (United States)", reg: "21 CFR 182.3013", status: "GRAS", statusColor: "#006c49", adi: "GMP", description: "Generally Recognized As Safe for antioxidant and nutrient fortification." },
@@ -212,7 +212,7 @@ export const CURATED_ADDITIVES = [
       kosher: { certified: true, note: "Sunflower lecithin is Kitniyot-free; soy lecithin is Pareve", badge: "Pareve" },
       vegan: { certified: true, note: "Plant-derived (Soy or Sunflower)", badge: "Vegan" },
       glutenFree: { certified: true, note: "Naturally gluten free", badge: "Gluten Free" },
-      traceability: "Batch Traceability: ISO-22000 Cert #322-LC · Verified Pure"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 10, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -221,7 +221,7 @@ export const CURATED_ADDITIVES = [
       complianceAssessment: "Benign profile; standard chocolate dosage contributes negligible saturated fat."
     },
     pesticideResidues: [],
-    pesticideGauge: { compound: "None", detected: 0, euLimit: 0.1, usLimit: 0.1, maxScale: 0.2, alert: "Compliant", notice: "Heavy metals and solvent residues compliant with EFSA purity criteria." },
+    pesticideGauge: { compound: "None", detected: 0, euLimit: 0.1, usLimit: 0.1, maxScale: 0.2, alert: "Within demo limits", notice: "Heavy metals and solvent residues compliant with EFSA purity criteria." },
     regulatoryDossier: [
       { agency: "EFSA (European Union)", reg: "Regulation (EC) No 1333/2008", status: "Authorized Quantum Satis", statusColor: "#006c49", adi: "Not Specified", description: "Re-evaluated in 2020 by EFSA FAF Panel with no safety concern." },
       { agency: "US FDA (United States)", reg: "21 CFR 184.1400", status: "GRAS", statusColor: "#006c49", adi: "GMP", description: "Affirmed as GRAS for direct food use." },
@@ -254,7 +254,7 @@ export const CURATED_ADDITIVES = [
       kosher: { certified: true, note: "Seaweed plant derivative", badge: "Pareve" },
       vegan: { certified: true, note: "100% seaweed origin (Gelatin alternative)", badge: "Vegan" },
       glutenFree: { certified: true, note: "Grain-free seaweed matrix", badge: "Gluten Free" },
-      traceability: "Batch Traceability: ISO-22000 Cert #407-CR · Verified Pure"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 40, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -263,7 +263,7 @@ export const CURATED_ADDITIVES = [
       complianceAssessment: "Standard dairy thickener levels do not trigger MoH red labels."
     },
     pesticideResidues: [],
-    pesticideGauge: { compound: "None", detected: 0, euLimit: 0.1, usLimit: 0.1, maxScale: 0.2, alert: "Marine Screened", notice: "Screened for inorganic arsenic and cadmium below statutory marine thresholds." },
+    pesticideGauge: { compound: "None", detected: 0, euLimit: 0.1, usLimit: 0.1, maxScale: 0.2, alert: "Within demo limits", notice: "Screened for inorganic arsenic and cadmium below statutory marine thresholds." },
     regulatoryDossier: [
       { agency: "EFSA (European Union)", reg: "Regulation (EC) No 1333/2008", status: "Restricted in Infants", statusColor: "#ff9800", adi: "0-75 mg/kg bw", description: "Banned in infant formula; molecular weight monitored (<5% below 50 kDa)." },
       { agency: "US FDA (United States)", reg: "21 CFR 172.620", status: "Approved", statusColor: "#006c49", adi: "GMP", description: "Direct food additive for emulsification and stabilization." },
@@ -295,7 +295,7 @@ export const CURATED_ADDITIVES = [
       kosher: { certified: true, note: "Strict kosher pareve legume", badge: "Pareve" },
       vegan: { certified: true, note: "100% plant legume seed", badge: "Vegan" },
       glutenFree: { certified: true, note: "Natural gluten substitute in gluten-free baking", badge: "Gluten Free" },
-      traceability: "Batch Traceability: ISO-22000 Cert #412-GG · Verified Pure"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 5, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -304,7 +304,7 @@ export const CURATED_ADDITIVES = [
       complianceAssessment: "Benign dietary profile. Compliant with MoH nutrition guidelines."
     },
     pesticideResidues: [],
-    pesticideGauge: { compound: "None", detected: 0, euLimit: 0.1, usLimit: 0.1, maxScale: 0.2, alert: "Verified", notice: "Screened negative for pentachlorophenol and dioxin contaminants." },
+    pesticideGauge: { compound: "None", detected: 0, euLimit: 0.1, usLimit: 0.1, maxScale: 0.2, alert: "Within demo limits", notice: "Screened negative for pentachlorophenol and dioxin contaminants." },
     regulatoryDossier: [
       { agency: "EFSA (European Union)", reg: "Regulation (EC) No 1333/2008", status: "Authorized Quantum Satis", statusColor: "#006c49", adi: "Not Specified", description: "Re-evaluated in 2017 with no safety concerns." },
       { agency: "US FDA (United States)", reg: "21 CFR 184.1339", status: "GRAS", statusColor: "#006c49", adi: "GMP", description: "Affirmed as GRAS for multi-category food stabilization." },
@@ -336,7 +336,7 @@ export const CURATED_ADDITIVES = [
       kosher: { certified: true, note: "Kosher Pareve certified", badge: "Pareve" },
       vegan: { certified: true, note: "Non-animal microbial fermentation", badge: "Vegan" },
       glutenFree: { certified: true, note: "Core ingredient for gluten-free baking volume", badge: "Gluten Free" },
-      traceability: "Batch Traceability: ISO-22000 Cert #415-XG · Verified Pure"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 300, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -345,7 +345,7 @@ export const CURATED_ADDITIVES = [
       complianceAssessment: "Typical food dosage (0.2%) adds under 1mg sodium per 100g serving."
     },
     pesticideResidues: [],
-    pesticideGauge: { compound: "None", detected: 0, euLimit: 0.1, usLimit: 0.1, maxScale: 0.2, alert: "Pure", notice: "Negative for viable Xanthomonas or pathogenic microorganisms." },
+    pesticideGauge: { compound: "None", detected: 0, euLimit: 0.1, usLimit: 0.1, maxScale: 0.2, alert: "Within demo limits", notice: "Negative for viable Xanthomonas or pathogenic microorganisms." },
     regulatoryDossier: [
       { agency: "EFSA (European Union)", reg: "Regulation (EC) No 1333/2008", status: "Authorized Quantum Satis", statusColor: "#006c49", adi: "Not Specified", description: "Re-evaluated 2017 with no safety concerns." },
       { agency: "US FDA (United States)", reg: "21 CFR 172.695", status: "Approved", statusColor: "#006c49", adi: "GMP", description: "Direct food additive for thickening and stabilizing." },
@@ -377,7 +377,7 @@ export const CURATED_ADDITIVES = [
       kosher: { certified: true, note: "Requires strict kosher supervision to verify plant origin over animal tallow", badge: "Pareve (Plant)" },
       vegan: { certified: true, note: "Must be specified as 100% vegetable origin (Palm/Soy)", badge: "Vegan (Plant)" },
       glutenFree: { certified: true, note: "Naturally gluten free lipid", badge: "Gluten Free" },
-      traceability: "Batch Traceability: ISO-22000 Cert #471-MDG · Verified Vegetable Origin"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 0, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -386,7 +386,7 @@ export const CURATED_ADDITIVES = [
       complianceAssessment: "Typical bread formulation (0.5%) adds negligible saturated fat (<0.3g/100g)."
     },
     pesticideResidues: [],
-    pesticideGauge: { compound: "None", detected: 0, euLimit: 0.1, usLimit: 0.1, maxScale: 0.2, alert: "Pure", notice: "Free of trans-fatty acid contaminants above statutory limits." },
+    pesticideGauge: { compound: "None", detected: 0, euLimit: 0.1, usLimit: 0.1, maxScale: 0.2, alert: "Within demo limits", notice: "Free of trans-fatty acid contaminants above statutory limits." },
     regulatoryDossier: [
       { agency: "EFSA (European Union)", reg: "Regulation (EC) No 1333/2008", status: "Authorized Quantum Satis", statusColor: "#006c49", adi: "Not Specified", description: "Re-evaluated 2017 with no safety concerns." },
       { agency: "US FDA (United States)", reg: "21 CFR 184.1505", status: "GRAS", statusColor: "#006c49", adi: "GMP", description: "Affirmed as GRAS direct human food ingredient." },
@@ -419,7 +419,7 @@ export const CURATED_ADDITIVES = [
       kosher: { certified: true, note: "Kosher Pareve certified", badge: "Pareve" },
       vegan: { certified: true, note: "Synthetic compound, no animal substrates", badge: "Vegan" },
       glutenFree: { certified: true, note: "Naturally gluten free", badge: "Gluten Free" },
-      traceability: "Batch Traceability: ISO-22000 Cert #950-AK · Verified Pure"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 0, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -428,7 +428,7 @@ export const CURATED_ADDITIVES = [
       complianceAssessment: "Exempt from Israeli red sugar warning label (sugar substitute)."
     },
     pesticideResidues: [],
-    pesticideGauge: { compound: "None", detected: 0, euLimit: 0.1, usLimit: 0.1, maxScale: 0.2, alert: "Pure", notice: "Pure synthetic compound; heavy metals below 1 mg/kg." },
+    pesticideGauge: { compound: "None", detected: 0, euLimit: 0.1, usLimit: 0.1, maxScale: 0.2, alert: "Within demo limits", notice: "Pure synthetic compound; heavy metals below 1 mg/kg." },
     regulatoryDossier: [
       { agency: "EFSA (European Union)", reg: "Regulation (EC) No 1333/2008", status: "Authorized", statusColor: "#006c49", adi: "0-9 mg/kg bw", description: "Authorized across energy-reduced and no-added-sugar foods." },
       { agency: "US FDA (United States)", reg: "21 CFR 172.800", status: "Approved", statusColor: "#006c49", adi: "15 mg/kg bw", description: "FDA approved for general food and beverage sweetening." },
@@ -460,7 +460,7 @@ export const CURATED_ADDITIVES = [
       kosher: { certified: true, note: "Certified kosher pareve", badge: "Pareve" },
       vegan: { certified: true, note: "Synthetic carbohydrate modification", badge: "Vegan" },
       glutenFree: { certified: true, note: "Naturally gluten free", badge: "Gluten Free" },
-      traceability: "Batch Traceability: ISO-22000 Cert #955-SC · Verified Pure"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 0, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -469,7 +469,7 @@ export const CURATED_ADDITIVES = [
       complianceAssessment: "Exempt from Israeli red sugar warning label."
     },
     pesticideResidues: [],
-    pesticideGauge: { compound: "None", detected: 0, euLimit: 0.1, usLimit: 0.1, maxScale: 0.2, alert: "Pure", notice: "Pure pharmaceutical-grade sucralose." },
+    pesticideGauge: { compound: "None", detected: 0, euLimit: 0.1, usLimit: 0.1, maxScale: 0.2, alert: "Within demo limits", notice: "Pure pharmaceutical-grade sucralose." },
     regulatoryDossier: [
       { agency: "EFSA (European Union)", reg: "Regulation (EC) No 1333/2008", status: "Authorized", statusColor: "#006c49", adi: "0-15 mg/kg bw", description: "Authorized across energy-reduced foods." },
       { agency: "US FDA (United States)", reg: "21 CFR 172.823", status: "Approved", statusColor: "#006c49", adi: "5 mg/kg bw", description: "General-purpose sweetener approval." },
@@ -501,7 +501,7 @@ export const CURATED_ADDITIVES = [
       kosher: { certified: true, note: "Kosher Pareve plant certified", badge: "Pareve" },
       vegan: { certified: true, note: "Stevia rebaudiana plant leaf", badge: "Vegan" },
       glutenFree: { certified: true, note: "Naturally gluten free", badge: "Gluten Free" },
-      traceability: "Batch Traceability: ISO-22000 Cert #960-ST · Verified Pure Botanical"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 0, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -510,7 +510,7 @@ export const CURATED_ADDITIVES = [
       complianceAssessment: "Exempt from Israeli red sugar warning label."
     },
     pesticideResidues: [],
-    pesticideGauge: { compound: "None", detected: 0, euLimit: 0.1, usLimit: 0.1, maxScale: 0.2, alert: "Botanical Clean", notice: "Screened negative for organochlorine and pyrethroid pesticide residues." },
+    pesticideGauge: { compound: "None", detected: 0, euLimit: 0.1, usLimit: 0.1, maxScale: 0.2, alert: "Within demo limits", notice: "Screened negative for organochlorine and pyrethroid pesticide residues." },
     regulatoryDossier: [
       { agency: "EFSA (European Union)", reg: "Regulation (EC) No 1333/2008 & 1131/2011", status: "Authorized", statusColor: "#006c49", adi: "0-4 mg/kg bw", description: "Authorized in 2011 across 31 food categories." },
       { agency: "US FDA (United States)", reg: "GRAS Notices (GRN 252, etc.)", status: "GRAS", statusColor: "#006c49", adi: "4 mg/kg bw", description: "Affirmed as GRAS for high-purity rebaudioside A." },
@@ -543,7 +543,7 @@ export const CURATED_ADDITIVES = [
       kosher: { certified: true, note: "Kosher Pareve (Kitniyot for Passover)", badge: "Pareve" },
       vegan: { certified: true, note: "100% plant corn grain derivative", badge: "Vegan" },
       glutenFree: { certified: true, note: "Derived from corn, naturally gluten-free", badge: "Gluten Free" },
-      traceability: "Batch Traceability: ISO-22000 Cert #HFCS-55 · Verified Pure"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 5, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -552,7 +552,7 @@ export const CURATED_ADDITIVES = [
       complianceAssessment: "Exceeds the 10g/100g solid (or 5g/100ml liquid) barrier. Mandatory red octagonal sugar warning required on front of pack."
     },
     pesticideResidues: [],
-    pesticideGauge: { compound: "Glyphosate", detected: 0.015, euLimit: 0.1, usLimit: 5.0, maxScale: 0.2, alert: "Screened", notice: "Within industrial grain processing tolerances." },
+    pesticideGauge: { compound: "Glyphosate", detected: 0.015, euLimit: 0.1, usLimit: 5.0, maxScale: 0.2, alert: "Within demo limits", notice: "Within industrial grain processing tolerances." },
     regulatoryDossier: [
       { agency: "EFSA (European Union)", reg: "Regulation (EU) No 1169/2011", status: "Sugar Regulated", statusColor: "#ff9800", adi: "Restrict Free Sugars", description: "Mandatory front-of-pack declaration as glucose-fructose syrup." },
       { agency: "US FDA (United States)", reg: "21 CFR 184.1866", status: "GRAS", statusColor: "#ff9800", adi: "GMP", description: "Affirmed as GRAS; requires added sugars disclosure on Nutrition Facts." },
@@ -584,7 +584,7 @@ export const CURATED_ADDITIVES = [
       kosher: { certified: true, note: "Kosher Pareve plant oil", badge: "Pareve" },
       vegan: { certified: true, note: "100% plant origin (Ecological impact noted)", badge: "Vegan" },
       glutenFree: { certified: true, note: "Naturally gluten free lipid", badge: "Gluten Free" },
-      traceability: "Batch Traceability: ISO-22000 Cert #RSPO-PALM · Sustainable Certified"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 0, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -593,7 +593,7 @@ export const CURATED_ADDITIVES = [
       complianceAssessment: "Contains 49.3g saturated fat per 100g, dramatically exceeding the 5.0g limit. Mandatory red saturated fat label triggered."
     },
     pesticideResidues: [],
-    pesticideGauge: { compound: "3-MCPD Esters", detected: 0.8, euLimit: 1.25, usLimit: 1.5, maxScale: 2.0, alert: "Process Contaminant Assessed", notice: "Within EU Regulation 2020/1322 limits for vegetable oils." },
+    pesticideGauge: { compound: "3-MCPD Esters", detected: 0.8, euLimit: 1.25, usLimit: 1.5, maxScale: 2.0, alert: "Within demo limits", notice: "Within EU Regulation 2020/1322 limits for vegetable oils." },
     regulatoryDossier: [
       { agency: "EFSA (European Union)", reg: "Regulation (EU) 2018/290 & 2020/1322", status: "Contaminant Regulated", statusColor: "#ff9800", adi: "2 ug/kg bw (3-MCPD)", description: "Strict maximum limits on glycidyl esters (1000 ug/kg) and 3-MCPD in oils." },
       { agency: "US FDA (United States)", reg: "21 CFR 184.1555", status: "GRAS", statusColor: "#ff9800", adi: "GMP", description: "Food ingredient standard; saturated fat disclosure required." },
@@ -625,7 +625,7 @@ export const CURATED_ADDITIVES = [
       kosher: { certified: false, note: "Unwholesome banned processing", badge: "Prohibited" },
       vegan: { certified: false, note: "Prohibited toxicant", badge: "Banned" },
       glutenFree: { certified: true, note: "Non-grain", badge: "Gluten Free" },
-      traceability: "Batch Traceability: ISO-22000 Prohibited Status"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 0, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -634,7 +634,7 @@ export const CURATED_ADDITIVES = [
       complianceAssessment: "Illegal under Israeli Public Health Regulations (Food) if trans fatty acids exceed 2% of total lipid content."
     },
     pesticideResidues: [],
-    pesticideGauge: { compound: "Trans-Fatty Acids", detected: 4.5, euLimit: 2.0, usLimit: 0.5, maxScale: 5.0, alert: "STATUTORY VIOLATION", notice: "Exceeds statutory maximum permissible trans fat cap." },
+    pesticideGauge: { compound: "Trans-Fatty Acids", detected: 4.5, euLimit: 2.0, usLimit: 0.5, maxScale: 5.0, alert: "Above demo limit", notice: "Exceeds statutory maximum permissible trans fat cap." },
     regulatoryDossier: [
       { agency: "EFSA (European Union)", reg: "Commission Regulation (EU) 2019/649", status: "BANNED (>2%)", statusColor: "#ba1a1a", adi: "0 g/day", description: "Legally prohibited to market foods containing trans fat over 2g/100g of total fat." },
       { agency: "US FDA (United States)", reg: "Final Determination 2015/2018", status: "GRAS REVOKED / BANNED", statusColor: "#ba1a1a", adi: "0 g/day", description: "FDA completely revoked GRAS status for partially hydrogenated oils (PHOs)." },
@@ -643,177 +643,3 @@ export const CURATED_ADDITIVES = [
     ]
   }
 ];
-
-/**
- * Intelligent Dynamic Dossier Synthesizer
- * Ensures ANY food additive or ingredient ever searched generates an authentic, complete clinical dossier!
- */
-export function synthesizeDynamicDossier(queryText) {
-  const q = (queryText || "").trim();
-  const qUpper = q.toUpperCase();
-  const insMatch = qUpper.match(/E\s*(\d{3,4}[A-Z]?)/i);
-  const insNumber = insMatch ? `E${insMatch[1]}` : (qUpper.startsWith("E") && qUpper.length <= 6 ? qUpper : `INGR-${q.slice(0, 8).toUpperCase()}`);
-  const numericPart = insMatch ? parseInt(insMatch[1], 10) : 0;
-
-  let functionalClass = "Specialized Food Additive & Processing Aid";
-  let safetyScore = 78;
-  let riskLevel = "LOW-MODERATE RISK";
-  let adiRange = "0 - 10";
-  let maxIngoingVal = "500 - 2000";
-  let categoryName = "Monitored Additive";
-
-  if (numericPart >= 100 && numericPart < 200) {
-    functionalClass = "Food Coloring Agent (Natural / Synthetic Pigment)";
-    safetyScore = numericPart === 171 ? 15 : 62;
-    riskLevel = numericPart === 171 ? "BANNED (EU)" : "MODERATE (Azo/Color)";
-    adiRange = "0 - 5";
-    categoryName = "Coloring";
-  } else if (numericPart >= 200 && numericPart < 300) {
-    functionalClass = "Antimicrobial Food Preservative & Shelf-Life Extender";
-    safetyScore = 72;
-    riskLevel = "MODERATE RISK (Preservative)";
-    adiRange = "0 - 10";
-    categoryName = "Preservative";
-  } else if (numericPart >= 300 && numericPart < 400) {
-    functionalClass = "Antioxidant, Acidity Regulator & Synergist";
-    safetyScore = 90;
-    riskLevel = "LOW RISK / BENEFICIAL";
-    adiRange = "Quantum Satis";
-    categoryName = "Antioxidant";
-  } else if (numericPart >= 400 && numericPart < 500) {
-    functionalClass = "Thickener, Stabilizer, Gelling Agent & Emulsifier";
-    safetyScore = 85;
-    riskLevel = "LOW RISK";
-    adiRange = "Not Specified";
-    categoryName = "Hydrocolloid / Emulsifier";
-  } else if (numericPart >= 500 && numericPart < 600) {
-    functionalClass = "Mineral Salt, Leavening Agent & Anti-Caking Auxiliary";
-    safetyScore = 88;
-    riskLevel = "LOW RISK";
-    adiRange = "Not Specified";
-    categoryName = "Mineral Salt";
-  } else if (numericPart >= 600 && numericPart < 700) {
-    functionalClass = "Flavor Enhancer & Savory Umami Bio-Agent";
-    safetyScore = 74;
-    riskLevel = "MODERATE CONCERN";
-    adiRange = "0 - 30";
-    categoryName = "Flavor Enhancer";
-  } else if (numericPart >= 900 && numericPart < 1000) {
-    functionalClass = "Sweetener, Glazing Agent or Packaging Gas";
-    safetyScore = 68;
-    riskLevel = "MODERATE RISK";
-    adiRange = "0 - 15";
-    categoryName = "Sweetener / Glazing";
-  }
-
-  return {
-    ins: insNumber,
-    name: `${q} (${insNumber})`,
-    chemicalName: q,
-    formula: "Organo-mineral complex",
-    cas: "Approved Food Codex CAS",
-    einecs: "200-Series Approved",
-    functionalClass: `${functionalClass} in modern processed foodstuffs.`,
-    safetyScore,
-    riskLevel,
-    riskTitle: `Assay Risk: ${riskLevel} (${categoryName})`,
-    riskSubtitle: `Codex Alimentarius CXS 192-1995 · EFSA Authorized Framework`,
-    alertHeadline: `Codex Monitored Additive: ${q}`,
-    alertBadge: "EFSA/JECFA Codex Monitored",
-    alertDescription: `Authentic biological assessment for ${q}. Fully mapped to European Food Safety Authority (EFSA) OpenFoodTox and Israeli Ministry of Health Decree 5780 specifications.`,
-    adi: {
-      range: adiRange,
-      unit: "mg/kg bw/day",
-      fillPercent: safetyScore,
-      note: "Standard established acceptable daily intake benchmark."
-    },
-    carcinogenicity: {
-      hazard: "Group 3",
-      tag: "(Negative in standard toxicology battery)",
-      fillPercent: 100 - safetyScore,
-      note: "No genotoxic or carcinogenic hazard identified under statutory levels."
-    },
-    maxIngoing: {
-      value: maxIngoingVal,
-      unit: "mg/kg or Quantum Satis",
-      fillPercent: Math.min(100, Math.max(20, 100 - safetyScore + 25)),
-      note: "Bound to Good Manufacturing Practice (GMP) specifications."
-    },
-    pediatricRisk: {
-      value: "Standard Caution",
-      sub: "General Population Safe",
-      fillPercent: Math.max(10, 100 - safetyScore),
-      note: "Complies with pediatric food safety guidelines at monitored doses."
-    },
-    dietary: {
-      halal: { certified: true, note: "Pure synthetic or mineral source compliant with Halal requirements", badge: "Halal" },
-      kosher: { certified: true, note: "Chemical synthesis free of meat/dairy enzyme substrates", badge: "Pareve" },
-      vegan: { certified: true, note: "Free of animal bones, marrow, or porcine substrates", badge: "Vegan" },
-      glutenFree: { certified: true, note: "<5 ppm gliadin threshold", badge: "Gluten Free" },
-      traceability: `Batch Traceability: ISO-22000 Cert #${Math.floor(Math.random() * 899 + 100)}-Codex`
-    },
-    israeliMohLabels: {
-      sodium: { triggered: false, value: 50, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
-      saturatedFat: { triggered: false, value: 0, unit: "g / 100g", limit: 5.0, labelHe: "שומן רווי", labelEn: "Sat. Fat" },
-      sugar: { triggered: false, value: 0, unit: "g / 100g", limit: 10.0, labelHe: "סוכר", labelEn: "Sugar" },
-      complianceAssessment: "Standard formulated usage does not trigger Israeli front-of-package red octagonal warning badges."
-    },
-    pesticideResidues: [
-      {
-        compound: "Chlorpyrifos",
-        cas: "2921-88-2",
-        group: "Organophosphate",
-        detected: "0.003 mg/kg",
-        detectedNum: 0.003,
-        euMrl: "0.010 mg/kg",
-        usEpa: "0.050 mg/kg",
-        israelMrl: "0.010 mg/kg",
-        verdict: "Safe Margin",
-        isViolation: false
-      }
-    ],
-    pesticideGauge: {
-      compound: "Chlorpyrifos",
-      detected: 0.003,
-      euLimit: 0.010,
-      usLimit: 0.050,
-      maxScale: 0.060,
-      alert: "Safe Residue",
-      notice: "Pesticide residues fully compliant with Israeli MoH & PPIS harmonized limits."
-    },
-    regulatoryDossier: [
-      {
-        agency: "EFSA (European Union)",
-        reg: "Regulation (EC) No 1333/2008",
-        status: "Authorized / Evaluated",
-        statusColor: "#006c49",
-        adi: adiRange,
-        description: "Evaluated within EU food additive authorization annexes."
-      },
-      {
-        agency: "US FDA (United States)",
-        reg: "21 CFR Parts 172-184",
-        status: "GRAS / Permitted",
-        statusColor: "#006c49",
-        adi: "GMP / Permitted",
-        description: "Permitted for designated commercial food use."
-      },
-      {
-        agency: "JECFA (WHO / FAO)",
-        reg: "Codex Alimentarius CXS 192-1995",
-        status: "Allocated",
-        statusColor: "#006c49",
-        adi: adiRange,
-        description: "Codex Alimentarius general standard for food additives."
-      },
-      {
-        agency: "Israeli MoH",
-        reg: "Public Health Regulations 5780",
-        status: "Approved",
-        statusColor: "#006c49",
-        adi: adiRange,
-        description: "Authorized food grade additive in standard formulations."
-      }
-    ]
-  };
-}

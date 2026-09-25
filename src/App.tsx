@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header, NavTab } from './components/Header';
 import { ContextRibbon } from './components/ContextRibbon';
-import { SearchConsole } from './components/SearchConsole';
+import { SearchConsole, isIngredientListQuery } from './components/SearchConsole';
 import { PrimaryDossier } from './components/PrimaryDossier';
 import { DietaryAndMohLabels } from './components/DietaryAndMohLabels';
 import { PesticideMrlSection } from './components/PesticideMrlSection';
@@ -14,20 +14,27 @@ import { NutritionDirectory } from './components/NutritionDirectory';
 import { McpDocsView } from './components/McpDocsView';
 import { Footer } from './components/Footer';
 
-import { ADDITIVES_DATABASE, checkAdditive } from '../api/mcp-engine.js';
 import { AdditiveDossier } from './types';
-import { callMcp } from './services/mcpClient';
+import { callMcp, describeMcpError } from './services/mcpClient';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<NavTab>('safety-dossier-scanner');
-  const [query, setQuery] = useState('E250 (Sodium Nitrite) & Chlorpyrifos Residues in Cured Meats');
-  const [activeDossier, setActiveDossier] = useState<AdditiveDossier>(ADDITIVES_DATABASE[0]);
+  const [query, setQuery] = useState('E250');
+  const [activeDossier, setActiveDossier] = useState<AdditiveDossier | null>(null);
   const [rawMcpResponse, setRawMcpResponse] = useState<any>(null);
-  const [latency, setLatency] = useState(142);
-  const [isLoading, setIsLoading] = useState(false);
+  const [latency, setLatency] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSyncing, setIsSyncing] = useState(false);
   const [showExportModal, setShowExportModal] = useState(false);
   const [isMcpInspectorOpen, setIsMcpInspectorOpen] = useState(false);
+
+  // Tab query coordination
+  const [pesticideQuery, setPesticideQuery] = useState('Glyphosate');
+  const [nutritionQuery, setNutritionQuery] = useState('חומוס מוכן למריחה');
+  const [ingredientScannerText, setIngredientScannerText] = useState(
+    'Sugar, E150d, E621, Citric Acid, E211, Ascorbic Acid'
+  );
 
   const [activeToggles, setActiveToggles] = useState({
     jecfaEfsa: true,
@@ -37,53 +44,81 @@ export default function App() {
     pesticideMrl: true,
   });
 
-  const handleSearch = async (overrideQuery?: string) => {
+  const handleSearch = async (overrideQuery?: string, targetTab?: NavTab) => {
     const q = overrideQuery !== undefined ? overrideQuery : query;
     if (!q.trim()) return;
 
-    // If query looks like an ingredient list with multiple commas
-    if (q.includes(',') && (q.toLowerCase().includes('sugar') || q.toLowerCase().includes('acid') || q.split(',').length > 2)) {
-      setActiveTab('safety-dossier-scanner');
+    if (targetTab) {
+      if (targetTab === 'ingredient-scanner') {
+        setIngredientScannerText(q);
+        setActiveTab('ingredient-scanner');
+        return;
+      }
+      if (targetTab === 'pesticide-mrl-lookup') {
+        setPesticideQuery(q);
+        setActiveTab('pesticide-mrl-lookup');
+        return;
+      }
+      if (targetTab === 'nutrition-profiler') {
+        setNutritionQuery(q);
+        setActiveTab('nutrition-profiler');
+        return;
+      }
+      setActiveTab(targetTab);
+    }
+
+    // Check if query is an ingredient list with two or more ", " separators
+    if (isIngredientListQuery(q)) {
+      setIngredientScannerText(q);
+      setActiveTab('ingredient-scanner');
+      return;
     }
 
     setIsLoading(true);
+    setErrorMessage(null);
     try {
-      const response = await callMcp<AdditiveDossier>('check_additive', { query: q });
+      const response = await callMcp<AdditiveDossier>('check_additive', { query: q.trim() });
       if (response.data) {
         setActiveDossier(response.data);
         setRawMcpResponse(response.rawPayload);
-        setLatency(response.latency || 142);
+        setLatency(response.latency);
+      } else {
+        setActiveDossier(null);
+        setErrorMessage(`No matching additive found in demo dataset (25 additives) for "${q}".`);
       }
-    } catch (_) {
-      const matched = checkAdditive(q);
-      setActiveDossier(matched);
-      setLatency(138);
+    } catch (err) {
+      setActiveDossier(null);
+      setErrorMessage(describeMcpError(err));
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleSyncCodices = () => {
+  useEffect(() => {
+    handleSearch('E250');
+  }, []);
+
+  const handleRefreshFromMcp = () => {
     setIsSyncing(true);
-    setTimeout(() => {
+    handleSearch(query || 'E250').finally(() => {
       setIsSyncing(false);
-      setLatency(118);
-    }, 800);
+    });
   };
 
   const handleSelectAdditive = (dossier: AdditiveDossier) => {
     setActiveDossier(dossier);
-    setQuery(`${dossier.ins} (${dossier.name})`);
+    setQuery(dossier.ins);
     setActiveTab('safety-dossier-scanner');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleExportJson = () => {
+    if (!activeDossier) return;
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({
       dossier: activeDossier,
       timestamp: new Date().toISOString(),
       standards: "CXS 192, EFSA OpenFoodTox 2024.1, IL-MoH 5780",
-      verification: "ISO 17025 Data Verified"
+      dataset: "Demo dataset: illustrative values, not verified against JECFA, EFSA or Israeli MoH sources."
     }, null, 2));
     const downloadAnchor = document.createElement('a');
     downloadAnchor.setAttribute("href", dataStr);
@@ -129,31 +164,63 @@ export default function App() {
                 onOpenMcpInspector={() => setIsMcpInspectorOpen(true)}
               />
 
-              {/* Primary Assay Dossier */}
-              <PrimaryDossier
-                dossier={activeDossier}
-                onOpenMcpInspector={() => setIsMcpInspectorOpen(true)}
-              />
-
-              {/* Dietary & Israeli MoH Warning Labels System */}
-              <DietaryAndMohLabels dossier={activeDossier} />
-
-              {/* Pesticide Residue & MRL Harmonization Screen */}
-              {activeToggles.pesticideMrl && (
-                <PesticideMrlSection dossier={activeDossier} />
+              {/* Loading State */}
+              {isLoading && !activeDossier && (
+                <div className="bg-white rounded-xl shadow-xs border border-[#e2e8f0] p-12 text-center space-y-4">
+                  <div className="w-10 h-10 border-3 border-[#006c49]/20 border-t-[#006c49] rounded-full animate-spin mx-auto"></div>
+                  <p className="font-['JetBrains_Mono'] text-sm text-[#42484a]">
+                    Loading additive toxicological dossier from local MCP server (/api/mcp)...
+                  </p>
+                </div>
               )}
 
-              {/* Cross-Jurisdictional Regulatory Agency Dossier */}
-              <RegulatoryDossier
-                dossier={activeDossier}
-                onSync={handleSyncCodices}
-                isSyncing={isSyncing}
-              />
+              {/* Error / No Match State */}
+              {!isLoading && errorMessage && (
+                <div className="bg-white rounded-xl shadow-xs border border-[#ba1a1a]/30 p-8 text-center space-y-2">
+                  <span className="material-symbols-outlined text-[#ba1a1a] text-[36px]">error</span>
+                  <p className="font-['Inter'] font-semibold text-[#ba1a1a] text-base">{errorMessage}</p>
+                  <p className="font-['Inter'] text-xs text-[#72787a]">
+                    Demo dataset: illustrative values, not verified against JECFA, EFSA or Israeli MoH sources.
+                  </p>
+                </div>
+              )}
+
+              {/* Primary Assay Dossier */}
+              {activeDossier && (
+                <>
+                  <PrimaryDossier
+                    dossier={activeDossier}
+                    onOpenMcpInspector={() => setIsMcpInspectorOpen(true)}
+                  />
+
+                  {/* Dietary & Israeli MoH Warning Labels System */}
+                  <DietaryAndMohLabels dossier={activeDossier} />
+
+                  {/* Pesticide Residue & MRL Harmonization Screen */}
+                  {activeToggles.pesticideMrl && (
+                    <PesticideMrlSection dossier={activeDossier} />
+                  )}
+
+                  {/* Cross-Jurisdictional Regulatory Agency Dossier */}
+                  <RegulatoryDossier
+                    dossier={activeDossier}
+                    onSync={handleRefreshFromMcp}
+                    isSyncing={isSyncing}
+                  />
+                </>
+              )}
             </>
           )}
 
+          {activeTab === 'ingredient-scanner' && (
+            <IngredientScannerView
+              initialText={ingredientScannerText}
+              onSelectAdditive={handleSelectAdditive}
+            />
+          )}
+
           {activeTab === 'pesticide-mrl-lookup' && (
-            <PesticideLookupView />
+            <PesticideLookupView initialQuery={pesticideQuery} />
           )}
 
           {activeTab === 'e-number-directory' && (
@@ -161,7 +228,7 @@ export default function App() {
           )}
 
           {activeTab === 'nutrition-profiler' && (
-            <NutritionDirectory />
+            <NutritionDirectory initialQuery={nutritionQuery} />
           )}
 
           {activeTab === 'api-mcp-docs' && (
@@ -174,7 +241,7 @@ export default function App() {
       <Footer />
 
       {/* Export Modal Dialog */}
-      {showExportModal && (
+      {showExportModal && activeDossier && (
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-200">
           <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-[#e2e8f0] space-y-5">
             <div className="flex items-center justify-between">
@@ -187,7 +254,7 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => setShowExportModal(false)}
-                className="text-[#72787a] hover:text-[#001318] p-1 cursor-pointer"
+                className="text-[#72787a] hover:text-[#0b1c30] p-1 cursor-pointer"
               >
                 <span className="material-symbols-outlined text-[20px]">close</span>
               </button>

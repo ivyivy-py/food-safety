@@ -53,7 +53,7 @@ export const Footer: React.FC = () => {
         {/* Bottom copyright */}
         <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <span className="font-['JetBrains_Mono'] text-xs text-[#42484a]">
-            &copy; 2025 NutriSafe Bio-Informatics MCP. ISO 17025 Compliant Toxicology Node.
+            &copy; 2025 NutriSafe Bio-Informatics MCP. Demo dataset: illustrative values, not verified against JECFA, EFSA or Israeli MoH sources.
           </span>
 
           <div className="flex items-center gap-4 sm:gap-6 font-['Inter'] text-xs text-[#42484a] flex-wrap justify-center">

@@ -4,13 +4,11 @@
  * 1. check_additive
  * 2. check_ingredient_list
  * 3. search_additives
- * 4. check_nutrition (Israeli MoH Food DB - 4,624 foods)
+ * 4. check_nutrition (Israeli MoH Food DB - bundled demo foods)
  * 5. check_pesticide_mrl (Israeli MoH/PPIS MRLs harmonized with EU & US EPA)
  */
 
-import { CURATED_ADDITIVES, synthesizeDynamicDossier } from './ingredients-data.js';
-
-export const MCP_SERVER_ENDPOINT = "https://server.smithery.ai/twohalves/food-safety";
+import { CURATED_ADDITIVES } from './ingredients-data.js';
 
 const BASE_ADDITIVES = [
   {
@@ -57,7 +55,7 @@ const BASE_ADDITIVES = [
       kosher: { certified: true, note: "Chemical compound free of dairy or non-kosher animal enzymes", badge: "Pareve" },
       vegan: { certified: true, note: "No animal bone char, marrow, or gelatin substrate utilized", badge: "Vegan" },
       glutenFree: { certified: true, note: "<5 ppm gliadin threshold / Grain-free derivation", badge: "Gluten Free" },
-      traceability: "Batch Traceability: ISO-22000 Cert #992-01 · Verified Pure"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: true, value: 840, unit: "mg / 100g", limit: 500, labelHe: "נתרן גבוה", labelEn: "High Sodium" },
@@ -109,7 +107,7 @@ const BASE_ADDITIVES = [
       euLimit: 0.010,
       usLimit: 0.050,
       maxScale: 0.080,
-      alert: "Toxicological Alert: Neurodevelopmental Risk",
+      alert: "Above demo limit",
       notice: "Regulatory Divergence Notice: While conforming under US EPA 40 CFR food tolerances, this sample breaches EU Standing Committee on Plants, Animals, Food and Feed (SCoPAFF) strict ban. Commercial export into EU-27 single market or Israel will result in border rejection and RASFF alert notification."
     },
     regulatoryDossier: [
@@ -191,7 +189,7 @@ const BASE_ADDITIVES = [
       kosher: { certified: true, note: "Mineral substance, pareve certified across codices", badge: "Pareve" },
       vegan: { certified: true, note: "Mined and refined inorganic mineral, zero animal input", badge: "Vegan" },
       glutenFree: { certified: true, note: "Free of cereal grains and gluten proteins", badge: "Gluten Free" },
-      traceability: "Mineral Ore Refinement: CAS #13463-67-7"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 5, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -219,7 +217,7 @@ const BASE_ADDITIVES = [
       euLimit: 0.100,
       usLimit: 5.000,
       maxScale: 0.200,
-      alert: "Conforming Residue Profile",
+      alert: "Within demo limits",
       notice: "Zero divergence detected on raw mineral excipient."
     },
     regulatoryDossier: [
@@ -301,7 +299,7 @@ const BASE_ADDITIVES = [
       kosher: { certified: true, note: "Synthetic chemical compound, certified pareve", badge: "Pareve" },
       vegan: { certified: true, note: "100% synthetic coal-tar derivative, no animal catalysts", badge: "Vegan" },
       glutenFree: { certified: true, note: "Free from wheat, rye, barley, or oat components", badge: "Gluten Free" },
-      traceability: "FD&C Certified Yellow #5 · CAS 1934-21-0"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 120, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -316,7 +314,7 @@ const BASE_ADDITIVES = [
       euLimit: 0,
       usLimit: 0,
       maxScale: 0.1,
-      alert: "Chemical Assay Clean",
+      alert: "Within demo limits",
       notice: "Zero agricultural pesticide cross-contamination in batch chromatography."
     },
     regulatoryDossier: [
@@ -398,7 +396,7 @@ const BASE_ADDITIVES = [
       kosher: { certified: true, note: "Chemical synthesis; Pareve certified", badge: "Pareve" },
       vegan: { certified: true, note: "Produced via synthetic peptide coupling or bacterial fermentation", badge: "Vegan" },
       glutenFree: { certified: true, note: "Gluten-free amino acid derivative", badge: "Gluten Free" },
-      traceability: "Purity Grade: USP/FCC Standard · CAS #22839-47-0"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 0, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -413,7 +411,7 @@ const BASE_ADDITIVES = [
       euLimit: 0,
       usLimit: 0,
       maxScale: 0.1,
-      alert: "Purity Verified",
+      alert: "Within demo limits",
       notice: "Zero agrochemical residues detected."
     },
     regulatoryDossier: [
@@ -495,7 +493,7 @@ const BASE_ADDITIVES = [
       kosher: { certified: true, note: "Passover certified non-kitniyot grades available", badge: "Pareve" },
       vegan: { certified: true, note: "Aspergillus niger mycelial fermentation from beet/corn sugars", badge: "Vegan" },
       glutenFree: { certified: true, note: "Purified crystalline organic acid, <1 ppm gliadin", badge: "Gluten Free" },
-      traceability: "Fermentation Batch #CA-7789 · High Purity"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 0, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -510,7 +508,7 @@ const BASE_ADDITIVES = [
       euLimit: 0,
       usLimit: 0,
       maxScale: 0.1,
-      alert: "Ultra-Pure Profile",
+      alert: "Within demo limits",
       notice: "Substrates meet pharmaceutical excipient specifications."
     },
     regulatoryDossier: [
@@ -592,7 +590,7 @@ const BASE_ADDITIVES = [
       kosher: { certified: true, note: "Synthetic Pareve compound", badge: "Pareve" },
       vegan: { certified: true, note: "No animal-derived starting materials", badge: "Vegan" },
       glutenFree: { certified: true, note: "Gluten-free chemical salt", badge: "Gluten Free" },
-      traceability: "Food Grade FCC / USP Grade"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 160, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -607,7 +605,7 @@ const BASE_ADDITIVES = [
       euLimit: 0.001,
       usLimit: 0.005,
       maxScale: 0.01,
-      alert: "Benzene Free Matrix",
+      alert: "Within demo limits",
       notice: "Residual benzene in raw compound < 1 ppb."
     },
     regulatoryDossier: [
@@ -689,7 +687,7 @@ const BASE_ADDITIVES = [
       kosher: { certified: true, note: "Fermented Pareve certified", badge: "Pareve" },
       vegan: { certified: true, note: "Corynebacterium glutamicum microbial fermentation", badge: "Vegan" },
       glutenFree: { certified: true, note: "Crystalline sodium salt, gluten free", badge: "Gluten Free" },
-      traceability: "Ajinomoto Standard Bio-Fermentation"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 300, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -704,7 +702,7 @@ const BASE_ADDITIVES = [
       euLimit: 0,
       usLimit: 0,
       maxScale: 0.1,
-      alert: "Purity Confirmed",
+      alert: "Within demo limits",
       notice: "Batch meets FCC 12 specifications."
     },
     regulatoryDossier: [
@@ -786,7 +784,7 @@ const BASE_ADDITIVES = [
       kosher: { certified: true, note: "Pareve certified sugar breakdown product", badge: "Pareve" },
       vegan: { certified: true, note: "Plant-derived starches (corn, wheat, or cane)", badge: "Vegan" },
       glutenFree: { certified: true, note: "Wheat-derived syrups undergo complete starch hydrolysis (<20 ppm gluten)", badge: "Gluten Free" },
-      traceability: "DDW / Sethness Roquette Verified Low-4-MEI"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 30, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -801,7 +799,7 @@ const BASE_ADDITIVES = [
       euLimit: 0,
       usLimit: 0,
       maxScale: 0.1,
-      alert: "4-MEI Compliant",
+      alert: "Within demo limits",
       notice: "4-MEI residual < 15 ppm (conforms to EU limit of 250 mg/kg solid basis)."
     },
     regulatoryDossier: [
@@ -883,7 +881,7 @@ const BASE_ADDITIVES = [
       kosher: { certified: true, note: "Chemical Pareve synthesis", badge: "Pareve" },
       vegan: { certified: true, note: "Zero animal components used in synthesis", badge: "Vegan" },
       glutenFree: { certified: true, note: "Completely gluten free", badge: "Gluten Free" },
-      traceability: "Antioxidant Assay Grade"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 0, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -898,7 +896,7 @@ const BASE_ADDITIVES = [
       euLimit: 0,
       usLimit: 0,
       maxScale: 0.1,
-      alert: "Synthetic Purity Checked",
+      alert: "Within demo limits",
       notice: "Zero organophosphate cross-contamination."
     },
     regulatoryDossier: [
@@ -980,7 +978,7 @@ const BASE_ADDITIVES = [
       kosher: { certified: false, note: "Pikuach nefesh / dangerous substance prohibition", badge: "Prohibited" },
       vegan: { certified: false, note: "Toxicity profile precludes food grade use", badge: "Unsafe" },
       glutenFree: { certified: false, note: "Historically used strictly in wheat baking", badge: "Toxic" },
-      traceability: "Toxic Chemical Registry CAS #7758-01-2"
+      traceability: "Demo record: no batch or certification data"
     },
     israeliMohLabels: {
       sodium: { triggered: false, value: 0, unit: "mg / 100g", limit: 500, labelHe: "נתרן", labelEn: "Sodium" },
@@ -995,7 +993,7 @@ const BASE_ADDITIVES = [
       euLimit: 0.0,
       usLimit: 0.02,
       maxScale: 0.05,
-      alert: "TOXIC CONTAMINANT VIOLATION",
+      alert: "Above demo limit",
       notice: "Detection in commercial bakery results in immediate criminal regulatory sanction."
     },
     regulatoryDossier: [
@@ -1344,11 +1342,92 @@ export const PESTICIDES_DATABASE = [
   }
 ];
 
+// --- Utility Helpers ---
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+export function normalizeENumbers(str) {
+  if (!str) return '';
+  return str.replace(/\b[Ee][\s\-](\d{3,4}[a-zA-Z]?)\b/g, (match, p1) => 'E' + p1.toUpperCase());
+}
+
+export function matchesWholeWord(text, phrase) {
+  if (!text || !phrase) return false;
+  const escaped = escapeRegExp(phrase);
+  const regex = new RegExp(`(^|[^a-zA-Z0-9])${escaped}([^a-zA-Z0-9]|$)`, 'i');
+  return regex.test(text);
+}
+
+export function getAdditiveNames(item) {
+  const names = new Set();
+
+  function addClean(str) {
+    if (!str) return;
+    const s = str.trim().toLowerCase();
+    if (s.length >= 3) {
+      names.add(s);
+      if (s.length >= 6 && s.endsWith('s')) {
+        names.add(s.slice(0, -1));
+      }
+    }
+  }
+
+  function processNameField(field) {
+    if (!field) return;
+    addClean(field);
+    const withoutParens = field.replace(/\s*\([^)]*\)\s*/g, ' ').replace(/\s+/g, ' ').trim();
+    if (withoutParens && withoutParens !== field) {
+      addClean(withoutParens);
+    }
+    const bracketMatches = field.match(/\(([^)]+)\)/g);
+    if (bracketMatches) {
+      for (const bm of bracketMatches) {
+        addClean(bm.slice(1, -1).trim());
+      }
+    }
+  }
+
+  processNameField(item.name);
+  processNameField(item.chemicalName);
+
+  if (item.ins === 'INGR-PALM') {
+    addClean('palm oil');
+    addClean('palm fat');
+  }
+  if (item.ins === 'INGR-TRANSFAT') {
+    addClean('partially hydrogenated');
+    addClean('hydrogenated vegetable oil');
+    addClean('hydrogenated soybean oil');
+    addClean('trans fat');
+  }
+  if (item.ins === 'E471') {
+    addClean('mono- and diglycerides');
+    addClean('mono and diglycerides');
+    addClean('monoglycerides');
+  }
+  if (item.ins === 'E150d') {
+    addClean('caramel color');
+    addClean('caramel colour');
+  }
+  if (item.ins === 'E322') {
+    addClean('lecithin');
+    addClean('soy lecithin');
+    addClean('sunflower lecithin');
+  }
+  if (item.ins === 'INGR-HFCS') {
+    addClean('hfcs');
+    addClean('glucose-fructose syrup');
+  }
+
+  return Array.from(names);
+}
+
 /**
  * Scan an ingredient string for additives, synergies, allergen risks, and dietary flags
  */
 export function scanIngredientList(ingredientsText) {
-  if (!ingredientsText) {
+  if (!ingredientsText || typeof ingredientsText !== 'string' || !ingredientsText.trim()) {
     return {
       risk: "UNKNOWN",
       score: 100,
@@ -1361,24 +1440,26 @@ export function scanIngredientList(ingredientsText) {
     };
   }
 
-  const textLower = ingredientsText.toLowerCase();
+  const textNorm = normalizeENumbers(ingredientsText);
+  const textLower = textNorm.toLowerCase();
   const matched = [];
   const synergies = [];
   const bannedNotes = [];
   const allergenWarnings = [];
 
-  // Match additives
+  // Match additives: only when a whole-word E-number (normalised) or one of its names appears in the list
   for (const item of ADDITIVES_DATABASE) {
-    const insMatch = textLower.includes(item.ins.toLowerCase());
-    const nameMatch = textLower.includes(item.chemicalName.toLowerCase()) || textLower.includes(item.name.toLowerCase().split(' ')[0]);
+    const insMatch = matchesWholeWord(textNorm, item.ins);
+    const names = getAdditiveNames(item);
+    const nameMatch = names.some(n => matchesWholeWord(textLower, n));
     if (insMatch || nameMatch) {
       matched.push(item);
     }
   }
 
   // Check critical chemical synergies
-  const hasBenzoate = textLower.includes("e211") || textLower.includes("benzoate");
-  const hasAscorbic = textLower.includes("e300") || textLower.includes("ascorbic") || textLower.includes("vitamin c");
+  const hasBenzoate = matchesWholeWord(textLower, "e211") || matchesWholeWord(textLower, "benzoate") || matchesWholeWord(textLower, "benzoates") || matchesWholeWord(textLower, "sodium benzoate");
+  const hasAscorbic = matchesWholeWord(textLower, "e300") || matchesWholeWord(textLower, "ascorbic") || matchesWholeWord(textLower, "ascorbic acid") || matchesWholeWord(textLower, "vitamin c");
   if (hasBenzoate && hasAscorbic) {
     synergies.push({
       compound1: "Sodium Benzoate (E211)",
@@ -1389,9 +1470,9 @@ export function scanIngredientList(ingredientsText) {
     });
   }
 
-  const hasNitrite = textLower.includes("e250") || textLower.includes("nitrite");
-  const hasMeatOrAmine = textLower.includes("meat") || textLower.includes("pork") || textLower.includes("beef") || textLower.includes("poultry") || textLower.includes("cured");
-  if (hasNitrite && (hasMeatOrAmine || textLower.includes("protein"))) {
+  const hasNitrite = matchesWholeWord(textLower, "e250") || matchesWholeWord(textLower, "nitrite") || matchesWholeWord(textLower, "nitrites") || matchesWholeWord(textLower, "sodium nitrite");
+  const hasMeatOrAmine = matchesWholeWord(textLower, "meat") || matchesWholeWord(textLower, "pork") || matchesWholeWord(textLower, "beef") || matchesWholeWord(textLower, "poultry") || matchesWholeWord(textLower, "cured") || matchesWholeWord(textLower, "protein");
+  if (hasNitrite && hasMeatOrAmine) {
     synergies.push({
       compound1: "Sodium Nitrite (E250)",
       compound2: "Secondary Protein Amines",
@@ -1401,7 +1482,7 @@ export function scanIngredientList(ingredientsText) {
     });
   }
 
-  const hasCaramel4 = textLower.includes("e150d") || textLower.includes("caramel iv") || textLower.includes("sulphite ammonia");
+  const hasCaramel4 = matchesWholeWord(textLower, "e150d") || matchesWholeWord(textLower, "caramel iv") || matchesWholeWord(textLower, "sulphite ammonia") || matchesWholeWord(textLower, "sulfite ammonia");
   if (hasCaramel4) {
     synergies.push({
       compound1: "Caramel IV (E150d)",
@@ -1412,36 +1493,11 @@ export function scanIngredientList(ingredientsText) {
     });
   }
 
-  // Allergen checks
-  if (textLower.includes("peanut") || textLower.includes("בוטנים")) allergenWarnings.push("Peanuts / בוטנים");
-  if (textLower.includes("milk") || textLower.includes("dairy") || textLower.includes("חלב") || textLower.includes("casein") || textLower.includes("whey")) allergenWarnings.push("Milk / Dairy / חלב");
-  if (textLower.includes("wheat") || textLower.includes("חיטה") || textLower.includes("gluten") || textLower.includes("גלוטן")) allergenWarnings.push("Wheat / Gluten / חיטה");
-  if (textLower.includes("soy") || textLower.includes("סויה")) allergenWarnings.push("Soy / סויה");
-  if (textLower.includes("sesame") || textLower.includes("שומשום") || textLower.includes("טחינה")) allergenWarnings.push("Sesame / שומשום");
-  if (textLower.includes("egg") || textLower.includes("ביצים")) allergenWarnings.push("Eggs / ביצים");
-  if (textLower.includes("e220") || textLower.includes("sulphite") || textLower.includes("sulfite") || textLower.includes("גופרית")) allergenWarnings.push("Sulfites / E220 (>10 mg/kg)");
-
-  // Banned additives & critical ingredient checks
-  if (textLower.includes("e171") || textLower.includes("titanium dioxide")) {
-    bannedNotes.push("E171 (Titanium Dioxide) is banned in the European Union (Regulation 2022/63) and under phaseout in Israel.");
-  }
-  if (textLower.includes("e924a") || textLower.includes("potassium bromate")) {
-    bannedNotes.push("E924a (Potassium Bromate) is strictly BANNED in the EU, UK, Israel, and Canada due to renal carcinogenicity.");
-  }
-  if (textLower.includes("e320") || textLower.includes("bha")) {
-    bannedNotes.push("E320 (BHA) is subject to strict restrictions due to endocrine disruption and IARC 2B carcinogenicity.");
-  }
-  if (textLower.includes("partially hydrogenated") || textLower.includes("trans fat")) {
-    bannedNotes.push("Industrial Trans Fatty Acids (PHO) are legally banned in the US and restricted to <2% in the EU and Israel.");
-  }
-
   // Southampton Six Artificial Colors Hyperactivity Check
-  const hasSouthampton = textLower.includes("e102") || textLower.includes("tartrazine") ||
-    textLower.includes("e110") || textLower.includes("sunset yellow") ||
-    textLower.includes("e122") || textLower.includes("carmoisine") || textLower.includes("azorubine") ||
-    textLower.includes("e124") || textLower.includes("ponceau") ||
-    textLower.includes("e129") || textLower.includes("allura red") ||
-    textLower.includes("e104") || textLower.includes("quinoline yellow");
+  const hasSouthampton = [
+    "e102", "tartrazine", "e110", "sunset yellow", "e122", "carmoisine", "azorubine",
+    "e124", "ponceau", "e129", "allura red", "e104", "quinoline yellow"
+  ].some(term => matchesWholeWord(textLower, term));
   if (hasSouthampton) {
     synergies.push({
       compound1: "Southampton Six Synthetic Azo Dyes",
@@ -1450,6 +1506,29 @@ export function scanIngredientList(ingredientsText) {
       severity: "MODERATE",
       description: "Mandatory EU Warning: 'May have an adverse effect on activity and attention in children.'"
     });
+  }
+
+  // Allergen checks (strictly whole-word: "eggplant" never raises an egg warning)
+  if (/\b(peanuts?|בוטנים)\b/i.test(textNorm)) allergenWarnings.push("Peanuts / בוטנים");
+  if (/\b(milk|dairy|casein|whey|חלב)\b/i.test(textNorm)) allergenWarnings.push("Milk / Dairy / חלב");
+  if (/\b(wheat|gluten|חיטה|גלוטן)\b/i.test(textNorm)) allergenWarnings.push("Wheat / Gluten / חיטה");
+  if (/\b(soy|soya|סויה)\b/i.test(textNorm)) allergenWarnings.push("Soy / סויה");
+  if (/\b(sesame|tahini|טחינה|שומשום)\b/i.test(textNorm)) allergenWarnings.push("Sesame / שומשום");
+  if (/\b(eggs?|ביצים)\b/i.test(textNorm)) allergenWarnings.push("Eggs / ביצים");
+  if (/\b(e220|sulphites?|sulfites?|גופרית)\b/i.test(textNorm)) allergenWarnings.push("Sulfites / E220 (>10 mg/kg)");
+
+  // Banned additives & critical ingredient checks (whole-word)
+  if (/\b(e171|titanium dioxide)\b/i.test(textNorm)) {
+    bannedNotes.push("E171 (Titanium Dioxide) is banned in the European Union (Regulation 2022/63) and under phaseout in Israel.");
+  }
+  if (/\b(e924a|potassium bromate)\b/i.test(textNorm)) {
+    bannedNotes.push("E924a (Potassium Bromate) is strictly BANNED in the EU, UK, Israel, and Canada due to renal carcinogenicity.");
+  }
+  if (/\b(e320|bha|butylated hydroxyanisole)\b/i.test(textNorm)) {
+    bannedNotes.push("E320 (BHA) is subject to strict restrictions due to endocrine disruption and IARC 2B carcinogenicity.");
+  }
+  if (/\b(partially hydrogenated|hydrogenated vegetable oil|hydrogenated soybean oil|trans fats?)\b/i.test(textNorm)) {
+    bannedNotes.push("Industrial Trans Fatty Acids (PHO) are legally banned in the US and restricted to <2% in the EU and Israel.");
   }
 
   // Calculate overall risk
@@ -1474,110 +1553,233 @@ export function scanIngredientList(ingredientsText) {
     bannedNotes,
     allergenWarnings,
     dietaryCompatibility: {
-      halal: !textLower.includes("pork") && !textLower.includes("gelatin") && !textLower.includes("alcohol"),
-      kosher: !textLower.includes("pork") && !textLower.includes("shellfish"),
-      vegan: !textLower.includes("milk") && !textLower.includes("meat") && !textLower.includes("egg") && !textLower.includes("honey") && !textLower.includes("gelatin"),
-      glutenFree: !textLower.includes("wheat") && !textLower.includes("barley") && !textLower.includes("rye") && !textLower.includes("gluten")
+      halal: !/\b(pork|gelatin|alcohol|חזיר|אלכוהול)\b/i.test(textNorm),
+      kosher: !/\b(pork|shellfish|חזיר|שרצים)\b/i.test(textNorm),
+      vegan: !/\b(milk|dairy|meat|pork|beef|poultry|eggs?|honey|gelatin|חלב|בשר|ביצים|דבש)\b/i.test(textNorm),
+      glutenFree: !/\b(wheat|barley|rye|gluten|חיטה|שעורה|שיפון|גלוטן)\b/i.test(textNorm)
     },
     summary: `Risk: ${risk} — ${matched.length} monitored additives detected. ${synergies.length} synergistic chemical interactions flagged.`
   };
+}
+
+function normalizeSpelling(str) {
+  return (str || '')
+    .toLowerCase()
+    .replace(/colour/g, 'color')
+    .replace(/flavour/g, 'flavor')
+    .replace(/sulphite/g, 'sulfite')
+    .replace(/sulphur/g, 'sulfur');
 }
 
 /**
  * Search additives by query keyword, category, or concern
  */
 export function searchAdditives(query = "", category = "") {
-  const q = query.toLowerCase().trim();
-  const cat = category.toLowerCase().trim();
+  const qNorm = normalizeSpelling(query.trim());
+  const catNorm = normalizeSpelling(category.trim());
 
   return ADDITIVES_DATABASE.filter(item => {
-    const matchesQ = !q ||
-      item.ins.toLowerCase().includes(q) ||
-      item.name.toLowerCase().includes(q) ||
-      item.chemicalName.toLowerCase().includes(q) ||
-      item.cas.toLowerCase().includes(q) ||
-      item.functionalClass.toLowerCase().includes(q) ||
-      item.riskTitle.toLowerCase().includes(q) ||
-      (q.includes("banned") && (item.riskLevel.includes("BANNED") || item.ins === "E171" || item.ins === "E924a")) ||
-      (q.includes("preservative") && item.functionalClass.toLowerCase().includes("preservative")) ||
-      (q.includes("sweetener") && item.functionalClass.toLowerCase().includes("sweetener")) ||
-      (q.includes("color") && item.functionalClass.toLowerCase().includes("color"));
+    let matchesCat = true;
+    if (catNorm) {
+      if (catNorm.includes("banned")) {
+        matchesCat = item.ins === "E171" || item.ins === "E924a" || (item.riskLevel && item.riskLevel.toUpperCase().includes("BANNED"));
+      } else {
+        matchesCat = normalizeSpelling(item.functionalClass).includes(catNorm);
+      }
+    }
 
-    const matchesCat = !cat ||
-      item.functionalClass.toLowerCase().includes(cat);
+    let matchesQ = true;
+    if (qNorm) {
+      const isBannedQ = qNorm.includes("banned") && (item.ins === "E171" || item.ins === "E924a" || (item.riskLevel && item.riskLevel.toUpperCase().includes("BANNED")));
+      matchesQ = isBannedQ ||
+        item.ins.toLowerCase().includes(qNorm) ||
+        normalizeSpelling(item.name).includes(qNorm) ||
+        normalizeSpelling(item.chemicalName).includes(qNorm) ||
+        (item.cas && item.cas.toLowerCase().includes(qNorm)) ||
+        normalizeSpelling(item.functionalClass).includes(qNorm) ||
+        normalizeSpelling(item.riskTitle).includes(qNorm) ||
+        normalizeSpelling(item.riskLevel).includes(qNorm);
+    }
 
     return matchesQ && matchesCat;
   });
 }
 
 /**
- * Check additive by E-number, name, or CAS across the entire database
+ * Check additive by E-number, name, or CAS across the demo database.
+ * Returns null unless exactly one record fits.
  */
 export function checkAdditive(query = "E250") {
-  if (!query || !query.trim()) return ADDITIVES_DATABASE[0];
+  if (!query || typeof query !== 'string') return null;
   const qTrim = query.trim();
-  const cleanQ = qTrim.toUpperCase();
+  if (!qTrim) return null;
+  const qNorm = normalizeENumbers(qTrim);
+
+  // 1. E-number typed alone or found as a whole word
+  const matchedByIns = [];
+  for (const item of ADDITIVES_DATABASE) {
+    const insNorm = item.ins.toUpperCase();
+    const regex = new RegExp(`(^|[^a-zA-Z0-9])${escapeRegExp(insNorm)}([^a-zA-Z0-9]|$)`, 'i');
+    if (regex.test(qNorm)) {
+      matchedByIns.push(item);
+    }
+  }
+  if (matchedByIns.length > 1) return null;
+  if (matchedByIns.length === 1) {
+    for (const other of ADDITIVES_DATABASE) {
+      if (other.ins !== matchedByIns[0].ins) {
+        const names = getAdditiveNames(other);
+        if (names.some(n => matchesWholeWord(qNorm, n))) {
+          return null; // names two different additives
+        }
+      }
+    }
+    return matchedByIns[0];
+  }
+
+  // 2. Exact CAS number
+  const matchedByCas = ADDITIVES_DATABASE.filter(a => a.cas && a.cas.toLowerCase() === qTrim.toLowerCase());
+  if (matchedByCas.length === 1) return matchedByCas[0];
+  if (matchedByCas.length > 1) return null;
+
+  // 3. Exact name
   const qLower = qTrim.toLowerCase();
+  const matchedByExactName = ADDITIVES_DATABASE.filter(item => getAdditiveNames(item).includes(qLower));
+  if (matchedByExactName.length === 1) return matchedByExactName[0];
+  if (matchedByExactName.length > 1) return null;
 
-  // 1. Direct INS match
-  let directMatch = ADDITIVES_DATABASE.find(a =>
-    a.ins.toUpperCase() === cleanQ ||
-    cleanQ === a.ins.toUpperCase().replace(/\s+/g, '') ||
-    cleanQ.startsWith(a.ins.toUpperCase() + " ") ||
-    cleanQ.startsWith(a.ins.toUpperCase() + "(") ||
-    cleanQ.includes(" " + a.ins.toUpperCase() + " ") ||
-    cleanQ.endsWith(" " + a.ins.toUpperCase())
-  );
-  if (directMatch) return directMatch;
+  // 4. Longest name found in query as whole words
+  const matchedNames = [];
+  for (const item of ADDITIVES_DATABASE) {
+    const names = getAdditiveNames(item);
+    for (const n of names) {
+      if (matchesWholeWord(qNorm, n)) {
+        matchedNames.push({ item, name: n, length: n.length });
+      }
+    }
+  }
+  if (matchedNames.length > 0) {
+    const uniqueAdditives = new Set(matchedNames.map(m => m.item.ins));
+    if (uniqueAdditives.size > 1) return null; // names two different additives
 
-  // 2. CAS number match
-  directMatch = ADDITIVES_DATABASE.find(a => a.cas && a.cas === qTrim);
-  if (directMatch) return directMatch;
+    const maxLength = Math.max(...matchedNames.map(m => m.length));
+    const longest = matchedNames.filter(m => m.length === maxLength);
+    const longestAdditives = new Set(longest.map(m => m.item.ins));
+    if (longestAdditives.size === 1) {
+      return longest[0].item;
+    }
+    return null;
+  }
 
-  // 3. Name or chemical name match
-  directMatch = ADDITIVES_DATABASE.find(a =>
-    a.name.toLowerCase().includes(qLower) ||
-    a.chemicalName.toLowerCase().includes(qLower) ||
-    qLower.includes(a.name.toLowerCase().split(' ')[0]) ||
-    qLower.includes(a.chemicalName.toLowerCase().split(' ')[0])
-  );
-  if (directMatch) return directMatch;
+  // 5. Part of a name of four letters or more that fits exactly one additive
+  if (qLower.length >= 4) {
+    const matchedBySub = ADDITIVES_DATABASE.filter(item =>
+      getAdditiveNames(item).some(n => n.includes(qLower))
+    );
+    if (matchedBySub.length === 1) return matchedBySub[0];
+    return null;
+  }
 
-  // 4. Any substring INS match
-  directMatch = ADDITIVES_DATABASE.find(a => cleanQ.includes(a.ins.toUpperCase()));
-  if (directMatch) return directMatch;
-
-  // 5. Intelligent Dynamic Synthesis: Any E-number or custom ingredient generates an authentic clinical dossier
-  return synthesizeDynamicDossier(qTrim);
+  return null;
 }
 
 /**
- * Look up nutrition data for a food item (Hebrew or English)
+ * Look up nutrition data for a food item (Hebrew or English).
+ * Returns null unless exactly one record fits.
  */
 export function checkNutrition(query = "חומוס") {
-  const q = query.trim().toLowerCase();
-  const match = NUTRITION_DATABASE.find(item =>
-    item.nameHe.toLowerCase().includes(q) ||
-    item.nameEn.toLowerCase().includes(q) ||
-    item.category.toLowerCase().includes(q) ||
-    q.includes(item.nameHe.toLowerCase()) ||
-    q.includes(item.nameEn.toLowerCase())
+  if (!query || typeof query !== 'string') return null;
+  const qTrim = query.trim();
+  if (!qTrim) return null;
+  const qLower = qTrim.toLowerCase();
+
+  // 1. Exact English or Hebrew name
+  const exactMatches = NUTRITION_DATABASE.filter(item =>
+    item.nameEn.toLowerCase() === qLower ||
+    item.nameHe.trim() === qTrim
   );
-  return match || NUTRITION_DATABASE[0];
+  if (exactMatches.length === 1) return exactMatches[0];
+  if (exactMatches.length > 1) return null;
+
+  // 2. Query that contains a full name
+  const containsMatches = NUTRITION_DATABASE.filter(item =>
+    qLower.includes(item.nameEn.toLowerCase()) ||
+    qTrim.includes(item.nameHe.trim())
+  );
+  if (containsMatches.length === 1) return containsMatches[0];
+  if (containsMatches.length > 1) return null;
+
+  // 3. Start-of-word part of three letters or more that fits one food only
+  if (qTrim.length >= 3) {
+    const wordMatches = NUTRITION_DATABASE.filter(item => {
+      const wordsEn = item.nameEn.toLowerCase().split(/[\s,()\/]+/).filter(w => w.length > 0);
+      const wordsHe = item.nameHe.split(/[\s,()\/]+/).filter(w => w.length > 0);
+      return wordsEn.some(w => w.startsWith(qLower)) || wordsHe.some(w => w.startsWith(qTrim));
+    });
+    if (wordMatches.length === 1) return wordMatches[0];
+  }
+
+  return null;
+}
+
+function toSingular(word) {
+  const w = (word || '').trim().toLowerCase();
+  if (w.endsWith('ies') && w.length > 4) return w.slice(0, -3) + 'y';
+  if ((w.endsWith('oes') || w.endsWith('ses')) && w.length > 4) return w.slice(0, -2);
+  if (w.endsWith('s') && !w.endsWith('ss') && w.length > 3) return w.slice(0, -1);
+  return w;
 }
 
 /**
- * Check pesticide MRL limits by query or substance/crop
+ * Check pesticide MRL limits by query or substance/crop.
+ * Returns null unless exactly one record fits.
  */
 export function checkPesticideMrl(query = "glyphosate wheat") {
-  const q = query.trim().toLowerCase();
-  const match = PESTICIDES_DATABASE.find(p =>
-    q.includes(p.compound.toLowerCase()) ||
-    p.crops.some(c => q.includes(c.toLowerCase())) ||
-    p.cas.includes(q)
-  );
-  return match || PESTICIDES_DATABASE[0];
+  if (!query || typeof query !== 'string') return null;
+  const qTrim = query.trim();
+  if (!qTrim) return null;
+
+  // 1. A pesticide named as a whole word, or its exact CAS number, wins over a crop
+  const matchedByPesticide = [];
+  for (const p of PESTICIDES_DATABASE) {
+    const isCas = p.cas && p.cas.toLowerCase() === qTrim.toLowerCase();
+    const isNamed = matchesWholeWord(qTrim, p.compound);
+    if (isCas || isNamed) {
+      matchedByPesticide.push(p);
+    }
+  }
+  if (matchedByPesticide.length === 1) return matchedByPesticide[0];
+  if (matchedByPesticide.length > 1) return null;
+
+  // 2. Compare crops in singular form on both sides
+  const allKnownCrops = new Set();
+  for (const p of PESTICIDES_DATABASE) {
+    for (const c of p.crops) {
+      allKnownCrops.add(toSingular(c));
+      for (const part of c.split(/\s+/)) {
+        allKnownCrops.add(toSingular(part));
+      }
+    }
+  }
+
+  // Tokenize query words
+  const queryTokens = qTrim.toLowerCase().split(/[\s,&]+/).filter(Boolean).map(toSingular);
+  if (queryTokens.length === 0) return null;
+
+  // A crop answers only when the query names nothing but crops and exactly one pesticide lists that crop
+  const allAreCrops = queryTokens.every(tok => allKnownCrops.has(tok));
+  if (!allAreCrops) return null;
+
+  const matchingPesticides = PESTICIDES_DATABASE.filter(p => {
+    const pCropsSingular = p.crops.map(toSingular);
+    const pCropParts = p.crops.flatMap(c => c.split(/\s+/).map(toSingular));
+    return queryTokens.every(tok => pCropsSingular.includes(tok) || pCropParts.includes(tok));
+  });
+
+  if (matchingPesticides.length === 1) return matchingPesticides[0];
+  return null;
 }
 
 export const checkIngredientList = scanIngredientList;
+
 

@@ -1,9 +1,17 @@
 import React from 'react';
+import { NavTab } from './Header';
+
+export function isIngredientListQuery(q: string): boolean {
+  // Never match chemical names such as "2,4-Hexadienoic Acid" where commas sit between digits
+  const withoutDigitCommas = q.replace(/(\d),(\d)/g, '$1_$2');
+  const commaSpaceMatches = withoutDigitCommas.match(/,\s+/g);
+  return commaSpaceMatches !== null && commaSpaceMatches.length >= 2;
+}
 
 interface SearchConsoleProps {
   query: string;
   setQuery: (q: string) => void;
-  onSearch: (customQuery?: string) => void;
+  onSearch: (customQuery?: string, targetTab?: NavTab) => void;
   isLoading: boolean;
   activeEngine?: string;
   onOpenMcpInspector?: () => void;
@@ -28,26 +36,34 @@ export const SearchConsole: React.FC<SearchConsoleProps> = ({
   setQuery,
   onSearch,
   isLoading,
-  activeEngine = "JECFA 96th Report / EFSA 2023-R",
+  activeEngine = "nutrisafe-food-mcp v3.0.0 (Local Demo Server)",
   onOpenMcpInspector,
   activeToggles,
   setToggles
 }) => {
-  const suggestedBiomarkers = [
-    { label: "E250 Sodium Nitrite", query: "E250 (Sodium Nitrite) & Chlorpyrifos Residues in Cured Meats" },
-    { label: "E171 Titanium Dioxide", query: "E171 Titanium Dioxide" },
-    { label: "E102 Tartrazine", query: "E102 Tartrazine" },
-    { label: "Glyphosate MRL", query: "Glyphosate MRL & Residues in Wheat" },
-    { label: "E951 Aspartame", query: "E951 Aspartame" },
-    { label: "E330 Citric Acid", query: "E330 Citric Acid" },
-    { label: "Chlorpyrifos", query: "Chlorpyrifos Organophosphate Residue" },
-    { label: "חומוס (Hummus)", query: "חומוס מוכן למריחה" },
-    { label: "Scan Ingredients Cocktail", query: "Sugar, E150d, E621, Citric Acid, E211" }
+  const suggestedBiomarkers: Array<{
+    label: string;
+    query: string;
+    targetTab?: NavTab;
+  }> = [
+    { label: "E250 Sodium Nitrite", query: "E250" },
+    { label: "E171 Titanium Dioxide", query: "E171" },
+    { label: "E102 Tartrazine", query: "E102" },
+    { label: "Glyphosate MRL", query: "Glyphosate", targetTab: "pesticide-mrl-lookup" },
+    { label: "E951 Aspartame", query: "E951" },
+    { label: "E330 Citric Acid", query: "E330" },
+    { label: "Chlorpyrifos", query: "Chlorpyrifos", targetTab: "pesticide-mrl-lookup" },
+    { label: "חומוס (Hummus)", query: "חומוס מוכן למריחה", targetTab: "nutrition-profiler" },
+    { label: "Scan Ingredients Cocktail", query: "Sugar, E150d, E621, Citric Acid, E211", targetTab: "ingredient-scanner" }
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSearch();
+    if (isIngredientListQuery(query)) {
+      onSearch(query, 'ingredient-scanner');
+    } else {
+      onSearch(query);
+    }
   };
 
   const toggleParam = (key: keyof typeof activeToggles) => {
@@ -69,7 +85,10 @@ export const SearchConsole: React.FC<SearchConsoleProps> = ({
             Unified Food Additive, Nutrition &amp; Pesticide Safety Intelligence
           </h1>
           <p className="font-['Inter'] text-sm sm:text-base text-[#42484a] max-w-2xl leading-relaxed">
-            Query any E-number, additive compound, agricultural pesticide, or raw matrix against EFSA/JECFA evaluations, ADI limits, Israeli MoH front-of-package red/green symbols, dietary conformance, and multi-jurisdictional MRL registries via live Model Context Protocol (MCP).
+            Query any E-number, additive compound, agricultural pesticide, or raw matrix against the bundled demo dataset (25 additives, 8 foods, 5 pesticides) via live Model Context Protocol (MCP).
+          </p>
+          <p className="font-['Inter'] text-xs text-[#72787a]">
+            Demo dataset: illustrative values, not verified against JECFA, EFSA or Israeli MoH sources.
           </p>
         </div>
 
@@ -151,7 +170,7 @@ export const SearchConsole: React.FC<SearchConsoleProps> = ({
               type="button"
               onClick={() => {
                 setQuery(bm.query);
-                onSearch(bm.query);
+                onSearch(bm.query, bm.targetTab);
               }}
               className="px-2.5 py-1 rounded-md bg-white hover:bg-[#dce9ff] text-[#0b1c30] font-['JetBrains_Mono'] text-xs border border-[#e2e8f0] shadow-2xs transition-colors cursor-pointer"
             >
@@ -164,67 +183,72 @@ export const SearchConsole: React.FC<SearchConsoleProps> = ({
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 pt-2 text-[#0b1c30] text-xs font-medium">
           <label
             onClick={() => toggleParam('jecfaEfsa')}
-            className="flex items-center gap-2 p-2 bg-white rounded-md border border-[#e2e8f0] cursor-pointer hover:bg-slate-50 select-none shadow-2xs"
+            className={`flex items-center gap-2 p-2.5 rounded-lg border cursor-pointer select-none transition-all ${
+              activeToggles.jecfaEfsa ? 'bg-white border-[#006c49] shadow-2xs text-[#006c49]' : 'bg-[#eff4ff] border-transparent opacity-60'
+            }`}
           >
-            <input
-              type="checkbox"
-              checked={activeToggles.jecfaEfsa}
-              onChange={() => {}}
-              className="w-4 h-4 rounded text-[#006c49] accent-[#006c49] cursor-pointer"
-            />
+            <span className={`w-4 h-4 rounded flex items-center justify-center text-white text-[10px] ${
+              activeToggles.jecfaEfsa ? 'bg-[#006c49]' : 'bg-[#72787a]'
+            }`}>
+              {activeToggles.jecfaEfsa && '✓'}
+            </span>
             <span className="truncate">JECFA &amp; EFSA Limits</span>
           </label>
 
           <label
             onClick={() => toggleParam('adiDosimetry')}
-            className="flex items-center gap-2 p-2 bg-white rounded-md border border-[#e2e8f0] cursor-pointer hover:bg-slate-50 select-none shadow-2xs"
+            className={`flex items-center gap-2 p-2.5 rounded-lg border cursor-pointer select-none transition-all ${
+              activeToggles.adiDosimetry ? 'bg-white border-[#006c49] shadow-2xs text-[#006c49]' : 'bg-[#eff4ff] border-transparent opacity-60'
+            }`}
           >
-            <input
-              type="checkbox"
-              checked={activeToggles.adiDosimetry}
-              onChange={() => {}}
-              className="w-4 h-4 rounded text-[#006c49] accent-[#006c49] cursor-pointer"
-            />
+            <span className={`w-4 h-4 rounded flex items-center justify-center text-white text-[10px] ${
+              activeToggles.adiDosimetry ? 'bg-[#006c49]' : 'bg-[#72787a]'
+            }`}>
+              {activeToggles.adiDosimetry && '✓'}
+            </span>
             <span className="truncate">ADI Dosimetry Profile</span>
           </label>
 
           <label
             onClick={() => toggleParam('dietaryCheck')}
-            className="flex items-center gap-2 p-2 bg-white rounded-md border border-[#e2e8f0] cursor-pointer hover:bg-slate-50 select-none shadow-2xs"
+            className={`flex items-center gap-2 p-2.5 rounded-lg border cursor-pointer select-none transition-all ${
+              activeToggles.dietaryCheck ? 'bg-white border-[#006c49] shadow-2xs text-[#006c49]' : 'bg-[#eff4ff] border-transparent opacity-60'
+            }`}
           >
-            <input
-              type="checkbox"
-              checked={activeToggles.dietaryCheck}
-              onChange={() => {}}
-              className="w-4 h-4 rounded text-[#006c49] accent-[#006c49] cursor-pointer"
-            />
-            <span className="truncate">Dietary (Kosher/Halal)</span>
+            <span className={`w-4 h-4 rounded flex items-center justify-center text-white text-[10px] ${
+              activeToggles.dietaryCheck ? 'bg-[#006c49]' : 'bg-[#72787a]'
+            }`}>
+              {activeToggles.dietaryCheck && '✓'}
+            </span>
+            <span className="truncate">Halal / Kosher / Vegan</span>
           </label>
 
           <label
             onClick={() => toggleParam('israeliMoh')}
-            className="flex items-center gap-2 p-2 bg-white rounded-md border border-[#e2e8f0] cursor-pointer hover:bg-slate-50 select-none shadow-2xs"
+            className={`flex items-center gap-2 p-2.5 rounded-lg border cursor-pointer select-none transition-all ${
+              activeToggles.israeliMoh ? 'bg-white border-[#006c49] shadow-2xs text-[#006c49]' : 'bg-[#eff4ff] border-transparent opacity-60'
+            }`}
           >
-            <input
-              type="checkbox"
-              checked={activeToggles.israeliMoh}
-              onChange={() => {}}
-              className="w-4 h-4 rounded text-[#006c49] accent-[#006c49] cursor-pointer"
-            />
-            <span className="truncate">Israeli MoH Red/Green</span>
+            <span className={`w-4 h-4 rounded flex items-center justify-center text-white text-[10px] ${
+              activeToggles.israeliMoh ? 'bg-[#006c49]' : 'bg-[#72787a]'
+            }`}>
+              {activeToggles.israeliMoh && '✓'}
+            </span>
+            <span className="truncate">Israeli MoH Decree 5780</span>
           </label>
 
           <label
             onClick={() => toggleParam('pesticideMrl')}
-            className="flex items-center gap-2 p-2 bg-white rounded-md border border-[#e2e8f0] cursor-pointer hover:bg-slate-50 select-none shadow-2xs col-span-2 sm:col-span-1"
+            className={`flex items-center gap-2 p-2.5 rounded-lg border cursor-pointer select-none transition-all col-span-2 sm:col-span-1 ${
+              activeToggles.pesticideMrl ? 'bg-white border-[#006c49] shadow-2xs text-[#006c49]' : 'bg-[#eff4ff] border-transparent opacity-60'
+            }`}
           >
-            <input
-              type="checkbox"
-              checked={activeToggles.pesticideMrl}
-              onChange={() => {}}
-              className="w-4 h-4 rounded text-[#006c49] accent-[#006c49] cursor-pointer"
-            />
-            <span className="truncate">Pesticide Residues (MRL)</span>
+            <span className={`w-4 h-4 rounded flex items-center justify-center text-white text-[10px] ${
+              activeToggles.pesticideMrl ? 'bg-[#006c49]' : 'bg-[#72787a]'
+            }`}>
+              {activeToggles.pesticideMrl && '✓'}
+            </span>
+            <span className="truncate">Pesticide PPIS MRL</span>
           </label>
         </div>
       </div>

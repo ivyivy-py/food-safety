@@ -38,7 +38,7 @@ export const RegulatoryDossier: React.FC<RegulatoryDossierProps> = ({
           <span className={`material-symbols-outlined text-[16px] ${isSyncing ? 'animate-spin' : ''}`}>
             refresh
           </span>
-          <span>{isSyncing ? 'Synchronizing...' : 'Sync Codices'}</span>
+          <span>{isSyncing ? 'Refreshing...' : 'Refresh from MCP'}</span>
         </button>
       </div>
 

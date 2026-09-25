@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { callMcp, MCP_ENDPOINT_CONFIG } from '../services/mcpClient';
+import { callMcp, MCP_PATH } from '../services/mcpClient';
 
 export const McpDocsView: React.FC = () => {
   const [activeTool, setActiveTool] = useState<string>('check_additive');
@@ -90,7 +90,7 @@ E621 (MSG) sensitivity concern; E150d (caramel IV) has 4-MEI limit`
         <div className="p-4 bg-[#eff4ff] border border-[#e5eeff] rounded-xl space-y-2 font-['JetBrains_Mono'] text-xs">
           <div className="flex items-center gap-2 text-[#001318]">
             <span className="font-bold">Primary Endpoint:</span>
-            <span className="text-[#006c49] select-all font-semibold">{MCP_ENDPOINT_CONFIG}</span>
+            <span className="text-[#006c49] select-all font-semibold">{MCP_PATH}</span>
           </div>
           <div className="flex items-center gap-2 text-[#42484a]">
             <span className="font-bold">Method:</span>

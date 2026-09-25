@@ -1,7 +1,14 @@
 import React from 'react';
 import { Logo } from './Logo';
+import { useMcpStatus } from '../services/mcpClient';
 
-export type NavTab = 'safety-dossier-scanner' | 'pesticide-mrl-lookup' | 'e-number-directory' | 'nutrition-profiler' | 'api-mcp-docs';
+export type NavTab =
+  | 'safety-dossier-scanner'
+  | 'ingredient-scanner'
+  | 'pesticide-mrl-lookup'
+  | 'e-number-directory'
+  | 'nutrition-profiler'
+  | 'api-mcp-docs';
 
 interface HeaderProps {
   activeTab: NavTab;
@@ -17,9 +24,11 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenMcpInspector
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const { status, serverInfo } = useMcpStatus();
 
   const navItems: Array<{ id: NavTab; label: string }> = [
     { id: 'safety-dossier-scanner', label: 'Safety Dossier Scanner' },
+    { id: 'ingredient-scanner', label: 'Ingredient Scanner' },
     { id: 'pesticide-mrl-lookup', label: 'Pesticide MRL Lookup' },
     { id: 'e-number-directory', label: 'E-Number Directory' },
     { id: 'nutrition-profiler', label: 'Nutrition Profiler' },
@@ -40,8 +49,10 @@ export const Header: React.FC<HeaderProps> = ({
               NutriSafe ToxiScan Bio-Portal
             </span>
             <span className="font-['JetBrains_Mono'] text-[11px] sm:text-xs text-[#42484a] flex items-center gap-1.5 font-medium">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#006c49] inline-block animate-pulse shrink-0"></span>
-              <span className="truncate max-w-[200px] sm:max-w-none">MCP Connected: JECFA / EFSA / IL-MoH DB Live v4.2</span>
+              <span className={`w-1.5 h-1.5 rounded-full inline-block shrink-0 ${status === 'online' ? 'bg-[#006c49] animate-pulse' : 'bg-[#ba1a1a]'}`}></span>
+              <span className="truncate max-w-[200px] sm:max-w-none">
+                {status === 'online' ? `MCP Connected: ${serverInfo.name} v${serverInfo.version}` : 'MCP Offline'}
+              </span>
             </span>
           </div>
         </div>
